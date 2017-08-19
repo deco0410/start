@@ -8,14 +8,27 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
+/*use think\Route;
 
+Route::rule('hello_world/index/:name', function ($name){
+            return 'hi'.$name ;
+        });*/
 return [
     '__pattern__' => [
         'name' => '\w+',
-    ],
-    '[hello]'     => [
-        ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
-        ':name' => ['index/hello', ['method' => 'post']],
+        'id' => '\d+',
+        'year' => '\d{4}',
+        'month' => '\d{2}',
     ],
 
-];
+    '[hello]'   => [
+        ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
+        ':name' => ['index/hello', ['method' => 'post']],
+        ':year' => ['hello_world/index', ['method' => 'get'],['year' => '\d{4}']],
+    ],
+
+   '[hello_world]' => [
+       ':year' => ['hello_world/index', ['method' => 'get'],['year' => '\d{4}']]
+    ],
+
+    ];
