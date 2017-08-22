@@ -14,19 +14,22 @@ return [
         'name' => '\w+',
         'id' => '\d+'
     ],
+
     '[hello]'     => [
         ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
         ':name' => ['index/hello', ['method' => 'get']],
     ],
+
     '[user]'=>[
         'index' => 'index/user/index',
         'create' => 'index/user/create',
         'add' => 'index/user/add',
-        'add_list' => 'index/user/add_list',
+        'add_list' => 'index/user/addList',
+        ':id' => 'index/user/read',
         'update/:id' => 'index/user/update',
         'delete/:id' => 'index/user/delete',
-        ':id' => 'index/user/read',
 
-    ]
+    ],
+
 
 ];

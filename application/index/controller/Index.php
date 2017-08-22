@@ -20,9 +20,13 @@ class Index
                           P($item['name']);
                       }
                   });
+        $list1 = Db::name('user')
+            ->where(['email'=>'jacky@qq.com', 'id' => '20'] )
+
+            ->select();
 
 
-        P($list);
+        P($list1);
     }
 
 }

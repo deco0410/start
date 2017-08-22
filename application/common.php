@@ -14,3 +14,5 @@ function P($object){
     echo "<pre>";
     print_r($object);
 }
+
+//error_reporting(E_ERROR|E_WARNING|E_PARSE);
