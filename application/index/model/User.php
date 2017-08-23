@@ -8,10 +8,19 @@ use think\Model;
 class User extends Model
 {
     protected $name = 'user';
-    protected $dateFormat = 'Y/m/d';
     protected $type = ['birthday' => 'timestamp:Y-m-d',];
-    protected $autoWriteTimestamp = false;
-    protected $insert = ['status'];
+    protected $autoWriteTimestamp = true;
+    protected $insert = ['status' => 1];
+
+    public function  profile()
+    {
+        return $this->hasOne('Profile');
+    }
+
+    public function  books()
+    {
+        return $this->hasMany('Book');
+    }
 
     protected function setStatusAttr($value, $data){
         return 'deco' == $data['nickname']? 1 : 2;
@@ -22,20 +31,7 @@ class User extends Model
         return $status[$value];
     }
 
-    protected function getBirthdayAttr($day)
-    {
-        return $day;
-    }
 
-    protected function setBirthdayAttr($birthday)
-    {
-        return strtotime($birthday);
-    }
-
-    protected function getUserBirthdayAttr($birthday, $data)
-    {
-        return date('Y-m-d', $data['birthday']);
-    }
 
     protected function scopeEmail($query)
     {

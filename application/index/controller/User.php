@@ -3,22 +3,31 @@
 namespace app\index\controller;
 
 use app\index\model\User as UserModel;
+use app\index\model\Profile;
+use think\Controller;
 
-class User
+
+class User extends Controller
 {
     public function add()
     {
-        //$user = new UserModel();
-        $user['nickname'] = 'jacky';
-        $user['email'] = 'jacky@qq.com';
-        $user['birthday'] = '2007-02-10';
-        $user['create_time'] = time();
-        if ($result = UserModel::create($user)) {
-            return '用户[' . $result->nickname . ':' . $result->id . ']' . '于' . date('Y-m-d H:i:s', time()) . ' 添加成功';
+        $user = new UserModel;
+        $user->name = 'deco';
+        $user->password = '111111';
+        $user->nickname = 'deco';
 
-        } else {
-            return 'error';
+        if ($user->save()){
+            $profile = new Profile;
+            $profile->truename = 'TangYi';
+            $profile->birthday = '1982-04-10';
+            $profile->address = 'Changsha';
+            $profile->email = '9111616@qq.com';
+            $user->profile()->save($profile);
+            return 'new user with profile has been added !';
+        }else{
+            return $user->getError();
         }
+
     }
 
     public function addList()
@@ -32,56 +41,51 @@ class User
         ];
 
         if ($user->saveAll($lst)) {
-            return 'multiple users has been successfully added!';
+            return 'multiple users has been successfully added !';
         } else {
-            return 'error adding multiple users!';
+            return 'error adding multiple users !';
         }
     }
 
     public function read($id = '')
     {
-        $user = UserModel::get($id);
+        $user = UserModel::get($id, 'profile');
+        echo $user->name . "<br/>";
         echo $user->nickname . "<br/>";
-        echo $user->email . "<br/>";
-        echo $user->birthday . "<br/>";
+        echo $user->password . "<br/>";
         echo $user->status . "<br/>";
+        echo $user->profile->truename . "<br/>";
+        echo $user->profile->birthday . "<br/>";
+        echo $user->profile->address . "<br/>";
+        echo $user->profile->email . "<br/>";
+        echo $user->create_time . "<br/>";
     }
 
     public function index()
     {
-        $list = UserModel::scope('email')->select();
+        $list = UserModel::all();
         foreach ($list as $user) {
             echo $user->nickname . '<br/>';
-            echo $user->email . '<br/>';
-            echo $user->birthday . '<br/>';
+           // echo $user->email . '<br/>';
+           // echo $user->birthday . '<br/>';
             echo $user->status . '<br/>';
             echo '-------------------------------------<br/>';
         }
     }
 
-    /* public function index()
-     {
-         $users = UserModel::scope('email')
-             ->scope('status')->scope(function ($query){
-                 $query->order('id', 'desc');
-             });
-         foreach ($users as $user) {
-             echo $user->nickname . "<br/>";
-             echo $user->email . "<br/>";
-             echo $user->birthday . "<br/>";
-             echo $user->status . "<br/>";
-             echo "---------------------------------------<br/>";
-         }
-     }*/
-
     public function update($id)
     {
-        // $user = UserModel::get($id);
-        $data = ['id' => (int)$id, 'nickname' => 'Tang', 'email' => 'TYN@qq.com'];
-        if (UserModel::update($data)) {
-            return 'update ok!';
+        $user = UserModel::get($id);
+        $user->name = 'jacky';
+       // $data = ['id' => (int)$id, 'nickname' => 'Tang', 'email' => 'TYN@qq.com'];
+        if ($user->save()) {
+
+            $user->profile->email = 'liu21st@gmail.com';
+            $user->profile->save();
+
+            return '用户[ ' . $user->name . ' ]更新成功';
         } else {
-            return 'update error!';
+            return $user->getError();
         }
     }
 
@@ -90,10 +94,16 @@ class User
         $user = UserModel::get($id);
         if ($user) {
             $user->delete();
-            return 'delete successfully!';
+            $user->profile->delete();
+            return '用户[ ' . $user->name . ' ]删除成功';
         } else {
-            return 'failed to delete!';
+            return $user->getError();
         }
+    }
+
+    public function create()
+    {
+        return view('user/create');
     }
 
 
