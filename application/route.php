@@ -28,7 +28,10 @@ return [
         ':id' => 'index/user/read',
         'update/:id' => 'index/user/update',
         'delete/:id' => 'index/user/delete',
-
+        'add_book/:id' => 'index/user/addBook',
+        'book_list/:id' => 'index/user/bookList',
+        'add_role' => 'index/user/addRole',
+        'delete_role' => 'index/user/deleteRole',
     ],
 
 

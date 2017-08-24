@@ -17,14 +17,6 @@ class Book extends Model
         return $this->belongsTo('User');
     }
 
-    public function addBook()
-    {
-        $user = User::get(1);
-        $book = new Book;
-        $book->title = 'Game of Thrones';
-        $book->publish_time = '2010-01-01';
-        $user->books()->save($book);
-        return 'add book ok!';
-    }
+
 
 }

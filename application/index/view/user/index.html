@@ -1,0 +1,14 @@
+{include file="user/header" title="用户列表"/}
+<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css" />
+<h2>用户列表({$list->total()}) </h2>
+{volist name="list" id="u" }
+<div class="info">
+    ID：{$u.id}<br/>
+    昵称：{$u.truename}<br/>
+    生日：{$u.birthday}<br/>
+    邮箱：{$u.email}<br/>
+    地址：{$u.address}<br/>
+</div>
+{/volist}
+{$list->render()}
+{include file="user/footer" /}
