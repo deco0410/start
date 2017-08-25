@@ -1,0 +1,17 @@
+{include file="user/header" title="用户信息" /}
+<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css" />
+<h2>用户信息（{$user['profile']['truename']}） </h2>
+
+<div class="user">
+ID：{$user['id']}<br/>
+昵称：{$user['nickname']}<br/>
+昵称：{$user}<br/>
+邮箱：{$user['profile']['email']}<br/>
+生日：{$user['profile']['birthday']}<br/>
+地址：{$user['profile']['address']}<br/>
+职业：{$role['title']}<br/>
+</div>
+
+
+{//{$list->render()}
+{include file="user/footer"  /}

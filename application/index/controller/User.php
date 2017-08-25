@@ -13,6 +13,7 @@ class User extends Controller
     public function add()
     {
         $user = new UserModel;
+        halt($user);
         $user->name = 'deco';
         $user->password = '111111';
         $user->nickname = 'GaoKeJi';
@@ -50,8 +51,14 @@ class User extends Controller
 
     public function read($id = '')
     {
-        $user = UserModel::get($id, ['profile', 'role', 'books']);
-        P ($user->toArray());
+        $user = UserModel::get($id, ['profile', 'books', 'role']);
+        $role = $user->role()->select();
+
+        //trace($user);
+        $this->assign('user', $user);
+        $this->assign('role', $role);
+        $this->view->replace(['__PUBLIC__' => '/static',]);
+        return $this->fetch();
         //P($user->append(['user_status'])->toArray());
         /*echo $user->name . "<br/>";
         echo $user->nickname . "<br/>";
@@ -66,14 +73,16 @@ class User extends Controller
 
     public function index()
     {
-        $list = Profile::paginate(1);
+        $info = new Profile;
+        $list = $info->all();
         //$list = Profile::all();
         //p($list);exit;
         $this->assign('list', $list);
         $this->assign('count', count($list));
+        //$this->view->engine->layout('layout/newLayout', '[__REPLACE__]');
+        //$this->view->engine->layout(false);
         return $this->fetch();
-
-       /* foreach ($list as $user) {
+        /*foreach ($list as $user) {
             echo $user->nickname . '<br/>';
             // echo $user->email . '<br/>';
             // echo $user->birthday . '<br/>';
@@ -146,9 +155,9 @@ class User extends Controller
 
     public function addRole()
     {
-        $user = UserModel::getByNickname('deco');
+        $user = UserModel::getByNickname('GaoKeJi');
         $result = $user->role()->save((['name' => 'editor', 'title' => '编辑']));
-        if ($result) return 'update role ok !';
+        if ($result) return 'update role ok !' ;
 
     }
 

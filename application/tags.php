@@ -25,4 +25,12 @@ return [
     'log_write'    => [],
     // 应用结束
     'app_end'      => [],
+    //模板配置
+    'template'      => [
+     /*   'layout_on' => true,
+        'layout_name' => 'layout',
+        'layout_item' => '[__REPLACE__]',*/
+    ],
+
+
 ];
