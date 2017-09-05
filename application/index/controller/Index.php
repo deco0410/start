@@ -2,9 +2,9 @@
 
 namespace app\index\controller;
 
-use think\Controller, think\Db;
+use think\Controller, think\Db, think\Session;
 
-class Index
+class Index extends Controller
 {
     public function hello()
     {
@@ -14,19 +14,32 @@ class Index
             ->insert($param);*/
 
 
-        $list = Db::name('data')
+        /*$list = Db::name('user')
                   ->chunk('1',function ($list){
                       foreach ($list as $item) {
                           P($item['name']);
                       }
-                  });
+                  });*/
         $list1 = Db::name('user')
-            ->where(['email'=>'jacky@qq.com', 'id' => '20'] )
-
+            ->where(['id' => '60'])
             ->select();
-
 
         P($list1);
     }
+
+    public function index()
+    {
+        return $this->fetch();
+    }
+
+    public function save($name = '')
+    {
+        Session::set('user_name', $name);
+
+        $this->success('Session设置成功!');
+
+    }
+
+
 
 }

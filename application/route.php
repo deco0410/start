@@ -8,6 +8,8 @@
 // +----------------------------------------------------------------------
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
+\think\Route::rule(':version/user/:id','api/:version.User/read');
+
 
 return [
     '__pattern__' => [
@@ -33,6 +35,5 @@ return [
         'add_role' => 'index/user/addRole',
         'delete_role' => 'index/user/deleteRole',
     ],
-
 
 ];
