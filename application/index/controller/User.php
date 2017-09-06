@@ -4,7 +4,6 @@ namespace app\index\controller;
 
 use app\index\model\User as UserModel;
 use app\index\model\Profile;
-use app\index\model\Role;
 use think\Controller;
 
 
@@ -13,19 +12,19 @@ class User extends Controller
     public function add()
     {
         $user = new UserModel;
-        halt($user);
-        $user->name = 'deco';
+        $user->nickname = 'deco';
         $user->password = '111111';
-        $user->nickname = 'GaoKeJi';
 
         if ($user->save()) {
             $profile = new Profile;
             $profile->truename = 'TangYi';
-            $profile->birthday = '1988-08-08';
+            $profile->gender = 1;
+            $profile->mobile = '13755179971';
+            $profile->birthday = '1982-04-10';
             $profile->address = 'Changsha';
-            $profile->email = 'deco@qq.com';
+            $profile->email = 'glorysd@qq.com';
             $user->profile()->save($profile);
-            return 'new user with profile has been added !';
+            return 'new user\'s been added !';
         } else {
             return $user->getError();
         }
@@ -51,12 +50,10 @@ class User extends Controller
 
     public function read($id = '')
     {
-        $user = UserModel::get($id, ['profile', 'books', 'role']);
-        $role = $user->role()->select();
-
+        $user = UserModel::get($id, 'profile');
+        halt($user->toArray());
         //trace($user);
         $this->assign('user', $user);
-        $this->assign('role', $role);
         $this->view->replace(['__PUBLIC__' => '/static',]);
         return $this->fetch();
         //P($user->append(['user_status'])->toArray());

@@ -1,30 +1,43 @@
 <?php
-
 namespace app\index\controller;
 
 use think\Controller, think\Db, think\Session;
+use PHPMailer\PHPMailer\PHPMailer ;
+use PHPMailer\PHPMailer\Exception ;
 
 class Index extends Controller
 {
+    public function email($qq){
+        $tomail = $qq.'@qq.com';
+        $mail = new PHPMailer();
+        $mail->isSMTP();
+        $mail->CharSet = 'utf8';
+        $mail->Host = 'smtp.qq.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = '9111616@qq.com';
+        $mail->Password = 'aexmxbvragmvbhhg';
+        $mail->SMTPSecure = "ssl";
+        $mail->Port = 465;
+
+        $mail->setFrom('9111616@qq.com');
+        $mail->addAddress($tomail, 'deco');
+        $mail->addReplyTo('9111616@qq.com', 'deco');
+
+        $mail->Subject = 'This is a test.';
+        $mail->Body = 'Hello world!';
+
+        if(!$mail->send()){
+            echo 'Error sending msg!  '.$mail->ErrorInfo;
+        }else{
+            echo 'Sending ok!';
+        }
+
+    }
+
+
     public function hello()
     {
-        $param = ['name' => 'deco', 'status' => 1];
-        /*Db::name('data')
-            ->where('id', '>=',2)
-            ->insert($param);*/
-
-
-        /*$list = Db::name('user')
-                  ->chunk('1',function ($list){
-                      foreach ($list as $item) {
-                          P($item['name']);
-                      }
-                  });*/
-        $list1 = Db::name('user')
-            ->where(['id' => '60'])
-            ->select();
-
-        P($list1);
+       $select = Db::name('user')->page(1, 7)->select();
     }
 
     public function index()
@@ -39,7 +52,5 @@ class Index extends Controller
         $this->success('Session设置成功!');
 
     }
-
-
 
 }

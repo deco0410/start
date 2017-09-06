@@ -22,6 +22,8 @@ return [
         ':name' => ['index/hello', ['method' => 'get']],
     ],
 
+    'email/:qq' => 'index/index/email'  ,
+
     '[user]'=>[
         'index' => 'index/user/index',
         'create' => 'index/user/create',
