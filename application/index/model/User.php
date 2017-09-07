@@ -15,6 +15,11 @@ class User extends Model
         return $this->hasOne('Profile');
     }
 
+    public function  blog()
+    {
+        return $this->hasMany('Blog', 'author_id');
+    }
+
 
     protected function getLevelAttr($value){
         $status = [ 0 => 'admin', 1 => 'guest', 2 => 'user' ];
