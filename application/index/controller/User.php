@@ -14,6 +14,7 @@ class User extends Controller
         $user = new UserModel;
         $user->nickname = 'deco';
         $user->password = '111111';
+        $user->level = 0;
 
         if ($user->save()) {
             $profile = new Profile;
@@ -51,7 +52,7 @@ class User extends Controller
     public function read($id = '')
     {
         $user = UserModel::get($id, 'profile');
-        halt($user->toArray());
+        P($user->toArray());EXIT;
         //trace($user);
         $this->assign('user', $user);
         $this->view->replace(['__PUBLIC__' => '/static',]);

@@ -16,25 +16,19 @@ class User extends Model
     }
 
 
-    protected function setLevelAttr($value, $data){
-        if (in_array($data['nickname'], ['deco', 'eva'])){
-            return 'admin' ;
-        }
+    protected function getLevelAttr($value){
+        $status = [ 0 => 'admin', 1 => 'guest', 2 => 'user' ];
+        return $status[$value];
     }
 
 
-    protected function scopeEmail($query)
+    protected function scopeLevel($query)
     {
-        $query->where('email', 'jacky@qq.com');
+        $query->where('level', '0');
     }
 
 
 
-
-    /*protected static function base($query)
-    {
-        $query->where('status', 1);
-    }*/
 
 
 
