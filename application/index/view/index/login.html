@@ -69,13 +69,15 @@
     </style>
 </head>
 <body>
-<h2>首页</h2>
-<div style="float: right">
-    <a href="{:url('login')}">登录</a>
-    <a href="{:url('index/index/register')}">注册</a>
-</div>
+<h2>用户登录</h2>
 
 
+<FORM method="post" class="form" action="{:url('loginOk')}">
+    昵称：<INPUT type="text" class="text" name="nickname" ><br/>
+    密码：<INPUT type="text" class="text" name="password" ><br/>
+    验证码：<INPUT type="text" class="text" name="code" ><div>{:captcha_img()}</div><br/>
+    <INPUT type="submit" class="btn" value="登录">
+</FORM>
 <div class="copyright">
     <a title="官方网站" href="http://www.thinkphp.cn">ThinkPHP</a>
     <span>V5</span>

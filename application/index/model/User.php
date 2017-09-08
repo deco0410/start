@@ -20,21 +20,23 @@ class User extends Model
         return $this->hasMany('Blog', 'author_id');
     }
 
+     public function  comments()
+    {
+        return $this->hasMany('Comment', 'user_id');
+    }
 
-    protected function getLevelAttr($value){
-        $status = [ 0 => 'admin', 1 => 'guest', 2 => 'user' ];
+
+    protected function getLevelAttr($value)
+    {
+        $status = [ 1 => 'guest', 2 => 'user', 3 => 'admin' ];
         return $status[$value];
     }
 
 
     protected function scopeLevel($query)
     {
-        $query->where('level', '0');
+        $query->where('level', '1');
     }
-
-
-
-
 
 
 }

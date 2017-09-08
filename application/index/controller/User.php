@@ -6,11 +6,20 @@ use app\index\model\User as UserModel;
 use app\index\model\Profile;
 use think\Controller;
 
-
+//checkreg();
 class User extends Controller
 {
     public function add()
     {
+
+
+
+
+
+
+
+
+        exit;
         $user = new UserModel;
         $user->nickname = 'deco';
         $user->password = '111111';
@@ -25,7 +34,7 @@ class User extends Controller
             $profile->address = 'Changsha';
             $profile->email = 'glorysd@qq.com';
             $user->profile()->save($profile);
-            return 'new user\'s been added !';
+            return 'new user has been added !';
         } else {
             return $user->getError();
         }

@@ -5,6 +5,7 @@ use think\Model;
 
 class Blog extends Model
 {
+    protected $autoWriteTimestamp = true;
 
     protected function user(){
         return $this->belongsTo('User');
@@ -13,4 +14,6 @@ class Blog extends Model
     protected function comments(){
         return $this->hasMany('Comment');
     }
+
 }
+

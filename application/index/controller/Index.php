@@ -1,43 +1,42 @@
 <?php
 namespace app\index\controller;
 
-use think\Controller, think\Db, think\Session;
-use PHPMailer\PHPMailer\PHPMailer ;
-use PHPMailer\PHPMailer\Exception ;
+use think\Controller, think\Db, think\Session ;
 
 class Index extends Controller
 {
-    public function email($qq){
-        $tomail = $qq.'@qq.com';
-        $mail = new PHPMailer();
-        $mail->isSMTP();
-        $mail->CharSet = 'utf8';
-        $mail->Host = 'smtp.qq.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = '9111616@qq.com';
-        $mail->Password = 'aexmxbvragmvbhhg';
-        $mail->SMTPSecure = "ssl";
-        $mail->Port = 465;
+    public function register(){
 
-        $mail->setFrom('9111616@qq.com');
-        $mail->addAddress($tomail, 'deco');
-        $mail->addReplyTo('9111616@qq.com', 'deco');
-
-        $mail->Subject = 'This is a test.';
-        $mail->Body = 'Hello world!';
-
-        if(!$mail->send()){
-            echo 'Error sending msg!  '.$mail->ErrorInfo;
-        }else{
-            echo 'Sending ok!';
-        }
+        return $this->fetch();
 
     }
 
+    public function registerOk(){
+        //TODO 验证注册数据
+        $data = input();
+
+     /*   $this->validate($data['code'],[
+            'captcha|验证码' => 'require|captcha'
+        ]) ;
+       */
+        $this->success('注册成功！', 'login');
+    }
+
+    public function login(){
+
+        return $this->fetch();
+
+    }
+
+    public function loginOk(){
+
+        $this->success('登录成功', 'index');
+
+    }
 
     public function hello()
-    {
-       $select = Db::name('user')->page(1, 7)->select();
+    {   echo 'hello';
+      // $select = Db::name('user')->page(1, 7)->select();
     }
 
     public function index()
@@ -45,12 +44,12 @@ class Index extends Controller
         return $this->fetch();
     }
 
-    public function save($name = '')
+   /* public function save($name = '')
     {
         Session::set('user_name', $name);
 
         $this->success('Session设置成功!');
 
-    }
+    }*/
 
 }

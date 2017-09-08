@@ -24,6 +24,12 @@ return [
 
     'email/:qq' => 'index/index/email'  ,
 
+
+    'register' => 'index/index/register',
+    'registerOk' => 'index/index/registerOk',
+
+
+
     '[user]'=>[
         'index' => 'index/user/index',
         'create' => 'index/user/create',
