@@ -20,11 +20,6 @@ class User extends Model
         return $this->hasMany('Blog', 'author_id');
     }
 
-     public function  comments()
-    {
-        return $this->hasMany('Comment', 'user_id');
-    }
-
 
     protected function getLevelAttr($value)
     {
