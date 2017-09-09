@@ -4,10 +4,23 @@ namespace app\index\controller;
 
 use app\index\Model\Profile;
 use app\index\model\User as UserModel;
-use think\Controller, think\Db, think\Session;
+use think\Controller, think\Db, think\Session, think\Request;
 
 class Index extends Controller
 {
+    //在注册界面检查用户名是否存在
+    public function checkUser(){
+        $data = Request::instance()->post('user_name');
+        $check = UserModel::get(['user_name' => $data]);
+        if ($check) {
+            return 'deny';
+        }else{
+            return 'allow';
+        }
+
+    }
+
+
     public function register()
     {
 

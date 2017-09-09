@@ -1,34 +1,54 @@
 {include file="user/header" title="新用户注册" /}
-
-
-<script>
-    $(function () {
-        $("#test").click(function () {
-            alert('hi');
-        });
-    });
-</script>
 <style>
     .tag {
         height: 30px;
         text-align: left;
+
     }
-    h3{
+
+    h3 {
         text-align: center;
 
     }
-    input{
+
+    input {
         width: 137px;
     }
 
-
 </style>
+<script>
+    $(function () {
+
+        $("#user_name").blur(function () {
+
+            var user_name = $(this).val();
+            $.ajax({
+                url: '{:url(\'index/index/checkUser\')}',
+                type: 'POST',
+                data: {user_name: user_name},
+                dataType: 'json',
+                success: function (res) {
+                    if (res == 'allow') {
+                        $("#check_user").html('该用户名可以使用!');
+                    } else {
+
+                        $("#check_user").html('该用户名已注册!');
+                    }
+                },
+                error: function () {
+                    alert('系统出错!');
+                }
+            })
+        });
+    });
+</script>
 <h3>用户注册</h3>
 <div style="text-align: center">
     <div style="display: inline-block">
         <form class="container" method="post" action="{:url('index/index/registerOk')}">
             <div class="tag">
-                账号：<input name="user_name" id="user_name">
+                <div style="float: left">账号：<input name="user_name" id="user_name"></div>
+                <p id="check_user" style="float: left"></p>
             </div>
 
             <div class="tag">
@@ -36,7 +56,7 @@
             </div>
 
             <div class="tag">
-                再次输入密码：<input type="password" name="password" id="password2">
+                再次输入密码：<input type="password" name="password2" id="password2">
             </div>
 
             <div class="tag">
@@ -60,13 +80,14 @@
             <div class="tag">
                 邮箱：<input name="email" id="email">
             </div>
-            <button type="submit">注册</button>
+            <button>注册</button>
 
 
         </form>
-         <button id="test">test</button>
+
     </div>
 </div>
+
 
 
 
