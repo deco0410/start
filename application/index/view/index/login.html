@@ -73,9 +73,8 @@
 
 
 <FORM method="post" class="form" action="{:url('loginOk')}">
-    昵称：<INPUT type="text" class="text" name="nickname" ><br/>
-    密码：<INPUT type="text" class="text" name="password" ><br/>
-    验证码：<INPUT type="text" class="text" name="code" ><div>{:captcha_img()}</div><br/>
+    昵称：<INPUT class="text" name="user_name" value="{$Request.session.user_name}"><br/>
+    密码：<INPUT type="password" class="text" name="password" ><br/>
     <INPUT type="submit" class="btn" value="登录">
 </FORM>
 <div class="copyright">

@@ -17,50 +17,73 @@ class Index extends Controller
 
     public function registerOk()
     {
-        //TODO 验证注册数据
+
         $data = input('post.');
 
-        $result = $this->validate($data, 'Index');   //用validate文件夹下的Index验证器
+        $validate = $this->validate($data, 'Index');   //用validate文件夹下与控制器同名(此处为Index)的验证器
 
-        if ($result !== true) {
-            return $result;
+        if ($validate !== true) {
+            return $validate;
+
         } else {
-            $user = new UserModel();
+            $check = UserModel::get(['user_name' => $data['user_name']]);
 
-            $result1 = $user->allowField(['nickname', 'password', 'level'])->save($data);
-            if ($result1) {
-                $profile = new Profile();
-                $result2 = $profile->allowField(['gender', 'birthday', 'mobile', 'email'])->save($data);
-                if ($result2) {
+            if ($check) {
+                $this->error('该用户名已经注册!', 'index/index/register');
+            }
+            $user =  new UserModel();
+            $user->user_name = $data['user_name'];
+            $user->password = md5($data['password']);
+
+            if ($user->save()) {
+
+                $profile['true_name'] = $data['true_name'];
+                $profile['gender'] = $data['gender'];
+                $profile['birthday'] = $data['birthday'];
+                $profile['mobile'] = $data['mobile'];
+                $profile['email'] = $data['email'];
+
+                if ($user->profile()->save($profile)) {
                     $this->success('注册成功！', 'login');
-                }else{
+
+                } else {
                     $this->error('注册失败', 'register');
                 }
 
-            }else{
+            } else {
                 $this->error('注册失败', 'register');
             }
-
-
         }
         /*   $this->validate($data['code'],[
                'captcha|验证码' => 'require|captcha'
            ]) ;
           */
-        //$this->success('注册成功！', 'login');
+
     }
 
     public function login()
     {
-
         return $this->fetch();
 
     }
 
     public function loginOk()
     {
+        $data = input('post.');
+        $check = UserModel::get(['user_name' => $data['user_name']]);
 
-        $this->success('登录成功', 'index');
+        if ($check) {
+            if ($check['password'] == md5($data['password'])) {
+                Session::set('user_name', $data['user_name']);
+                $this->success('登录成功!', 'index');
+
+            } else {
+                $this->error('密码错误,请重新登录!', 'login');
+            }
+
+        } else {
+            $this->error('该用户名不存在,请重新登录!', 'login');
+        }
 
     }
 
@@ -73,6 +96,7 @@ class Index extends Controller
     public function index()
     {
         return $this->fetch();
+
     }
 
     /* public function save($name = '')

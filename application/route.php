@@ -25,8 +25,8 @@ return [
     'email/:qq' => 'index/index/email'  ,
 
 
-    'register' => 'index/index/register',
-    'registerOk' => 'index/index/registerOk',
+    //'register' => 'index/index/register',
+    //'registerOk' => 'index/index/registerOk',
 
 
 

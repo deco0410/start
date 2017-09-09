@@ -1,41 +1,73 @@
 {include file="user/header" title="新用户注册" /}
-<form class="container" method="post" action="{:url('index/index/registerOk')}">
-    <div>
-        昵称：<input type="text" name="nickname" id="nickname">
+
+
+<script>
+    $(function () {
+        $("#test").click(function () {
+            alert('hi');
+        });
+    });
+</script>
+<style>
+    .tag {
+        height: 30px;
+        text-align: left;
+    }
+    h3{
+        text-align: center;
+
+    }
+    input{
+        width: 137px;
+    }
+
+
+</style>
+<h3>用户注册</h3>
+<div style="text-align: center">
+    <div style="display: inline-block">
+        <form class="container" method="post" action="{:url('index/index/registerOk')}">
+            <div class="tag">
+                账号：<input name="user_name" id="user_name">
+            </div>
+
+            <div class="tag">
+                密码：<input type="password" name="password" id="password">
+            </div>
+
+            <div class="tag">
+                再次输入密码：<input type="password" name="password" id="password2">
+            </div>
+
+            <div class="tag">
+                姓名：<input name="true_name" id="true_name">
+            </div>
+
+            <div class="tag">
+                <label for="gender">性别：</label>
+                <select name="gender" id="gender" style="height: 24px;">
+                    <option value="1">男</option>
+                    <option value="2">女</option>
+                    <option value="0" selected>保密</option>
+                </select>
+            </div>
+            <div class="tag">
+                生日：<input type="date" name="birthday" id="birthday">
+            </div>
+            <div class="tag">
+                手机：<input name="mobile" id="mobile">
+            </div>
+            <div class="tag">
+                邮箱：<input name="email" id="email">
+            </div>
+            <button type="submit">注册</button>
+
+
+        </form>
+         <button id="test">test</button>
     </div>
-    <div>
-        真实姓名：<input type="text" name="truename" id="truename">
-    </div>
-    <div>
-        密码：<input type="text" name="password" id="password">
-    </div>
-    <div>
-        <label for="gender">性别:</label>
-        <select name="gender" id="gender" >
-        <option value="1">男</option>
-        <option value="2">女</option>
-        <option value="0" selected>保密</option>
-        </select>
-    </div>
-    <div>
-        生日：<input type="date" name="birthday" id="birthday">
-    </div>
-    <div>
-        手机：<input type="text" name="mobile" id="mobile">
-    </div>
-    <div>
-        邮箱：<input type="text" name="email" id="email">
-    </div>
+</div>
 
 
 
-
-    <input name="level" value="2" type="hidden">
-    <button type="submit">注册</button>
-</form>
-
-
-
-
-{include file="user/footer" /}
 

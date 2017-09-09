@@ -12,25 +12,12 @@ class User extends Model
 
     public function  profile()
     {
-        return $this->hasOne('Profile');
+        return $this->hasOne('Profile', 'user_id');
     }
 
     public function  blog()
     {
         return $this->hasMany('Blog', 'author_id');
-    }
-
-
-    protected function getLevelAttr($value)
-    {
-        $status = [ 1 => 'guest', 2 => 'user', 3 => 'admin' ];
-        return $status[$value];
-    }
-
-
-    protected function scopeLevel($query)
-    {
-        $query->where('level', '1');
     }
 
 
