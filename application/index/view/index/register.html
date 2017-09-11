@@ -1,6 +1,7 @@
 {include file="user/header" title="新用户注册" /}
 <style>
     .tag {
+        width: 25rem;
         height: 30px;
         text-align: left;
 
@@ -19,27 +20,50 @@
 <script>
     $(function () {
 
-        $("#user_name").blur(function () {
+        $("#email").blur(function () {
+            var email = $(this).val();
 
-            var user_name = $(this).val();
+            if ($.trim(email).length == 0) {
+                $("#check_email").html('邮箱名不能为空!').css('color', 'red');
+                alert(new Date("2017-09-11")>new Date("2017-9-11"));
+                return false;
+            }
+
+            if(!(/\w+@\w+.\w+/).test(email)){
+                $("#check_email").html('邮箱格式不正确!').css('color', 'red');
+                return false;
+            }
+
             $.ajax({
-                url: '{:url(\'index/index/checkUser\')}',
+                url: '{:url(\'index/index/checkEmail\')}',
                 type: 'POST',
-                data: {user_name: user_name},
+                data: {email: email},
                 dataType: 'json',
                 success: function (res) {
                     if (res == 'allow') {
-                        $("#check_user").html('该用户名可以使用!');
+                        $("#check_email").html('该邮箱名可以使用!').css('color', 'green');
                     } else {
+                        $("#check_email").html('该邮箱名已注册!').css('color', 'red');
 
-                        $("#check_user").html('该用户名已注册!');
+                        return false;
                     }
                 },
                 error: function () {
                     alert('系统出错!');
                 }
-            })
+            });
         });
+
+        $("#password").blur(function () {
+            var password = $(this).val();
+
+            if ($.trim(password).length == 0) {
+                $("#password").html('密码不能为空!');
+
+                return false;
+            }
+        });
+
     });
 </script>
 <h3>用户注册</h3>
@@ -47,39 +71,22 @@
     <div style="display: inline-block">
         <form class="container" method="post" action="{:url('index/index/registerOk')}">
             <div class="tag">
-                <div style="float: left">账号：<input name="user_name" id="user_name"></div>
-                <p id="check_user" style="float: left"></p>
+                <div style="float: left;margin-right: 1rem;">邮箱：<input name="email" id="email"></div>
+                <p id="check_email" style="font-size: .9rem"></p>
             </div>
 
             <div class="tag">
-                密码：<input type="password" name="password" id="password">
+                密码：<input class="password" type="password" name="password" id="password">
             </div>
 
             <div class="tag">
-                再次输入密码：<input type="password" name="password2" id="password2">
-            </div>
-
-            <div class="tag">
-                姓名：<input name="true_name" id="true_name">
-            </div>
-
-            <div class="tag">
-                <label for="gender">性别：</label>
-                <select name="gender" id="gender" style="height: 24px;">
-                    <option value="1">男</option>
-                    <option value="2">女</option>
-                    <option value="0" selected>保密</option>
-                </select>
-            </div>
-            <div class="tag">
-                生日：<input type="date" name="birthday" id="birthday">
+                昵称：<input name="nickname" id="nickname">
             </div>
             <div class="tag">
                 手机：<input name="mobile" id="mobile">
             </div>
-            <div class="tag">
-                邮箱：<input name="email" id="email">
-            </div>
+
+
             <button>注册</button>
 
 

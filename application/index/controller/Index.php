@@ -9,12 +9,14 @@ use think\Controller, think\Db, think\Session, think\Request;
 class Index extends Controller
 {
     //在注册界面检查用户名是否存在
-    public function checkUser(){
-        $data = Request::instance()->post('user_name');
-        $check = UserModel::get(['user_name' => $data]);
+    public function checkEmail()
+    {
+        //$data = input('post.')['email'];
+        $data = Request::instance()->post('email');
+        $check = UserModel::get(['email' => $data]);
         if ($check) {
             return 'deny';
-        }else{
+        } else {
             return 'allow';
         }
 
@@ -39,40 +41,31 @@ class Index extends Controller
             return $validate;
 
         } else {
-            $check = UserModel::get(['user_name' => $data['user_name']]);
+            $check = UserModel::get(['email' => $data['email']]);
 
             if ($check) {
-                $this->error('该用户名已经注册!', 'index/index/register');
+                $this->error('该邮箱名已经注册!', 'index/index/register');
             }
-            $user =  new UserModel();
-            $user->user_name = $data['user_name'];
+            $user = new UserModel();
+            $user->user_name = $data['email'];
             $user->password = md5($data['password']);
 
             if ($user->save()) {
 
-                $profile['true_name'] = $data['true_name'];
-                $profile['gender'] = $data['gender'];
-                $profile['birthday'] = $data['birthday'];
-                $profile['mobile'] = $data['mobile'];
-                $profile['email'] = $data['email'];
-
-                if ($user->profile()->save($profile)) {
-                    $this->success('注册成功！', 'login');
-
-                } else {
-                    $this->error('注册失败', 'register');
-                }
+                $this->success('注册成功！', 'login');
 
             } else {
                 $this->error('注册失败', 'register');
             }
+
         }
-        /*   $this->validate($data['code'],[
+
+    }  /*   $this->validate($data['code'],[
                'captcha|验证码' => 'require|captcha'
            ]) ;
           */
 
-    }
+
 
     public function login()
     {
@@ -83,11 +76,11 @@ class Index extends Controller
     public function loginOk()
     {
         $data = input('post.');
-        $check = UserModel::get(['user_name' => $data['user_name']]);
+        $check = UserModel::get(['email' => $data['email']]);
 
         if ($check) {
             if ($check['password'] == md5($data['password'])) {
-                Session::set('user_name', $data['user_name']);
+                Session::set('email', $data['email']);
                 $this->success('登录成功!', 'index');
 
             } else {
@@ -95,7 +88,7 @@ class Index extends Controller
             }
 
         } else {
-            $this->error('该用户名不存在,请重新登录!', 'login');
+            $this->error('该邮箱名不存在,请重新登录!', 'login');
         }
 
     }
