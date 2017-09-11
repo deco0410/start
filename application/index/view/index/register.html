@@ -7,13 +7,14 @@
 
     }
 
-    h3 {
-        text-align: center;
-
-    }
-
     input {
         width: 137px;
+    }
+
+    p {
+        font-size: .9rem;
+        color: red;
+
     }
 
 </style>
@@ -23,14 +24,13 @@
         $("#email").blur(function () {
             var email = $(this).val();
 
-            if ($.trim(email).length == 0) {
-                $("#check_email").html('邮箱名不能为空!').css('color', 'red');
-                alert(new Date("2017-09-11")>new Date("2017-9-11"));
+            if (email.length == 0) {
+                $("#check_email").html('邮箱名不能为空!');
                 return false;
             }
 
-            if(!(/\w+@\w+.\w+/).test(email)){
-                $("#check_email").html('邮箱格式不正确!').css('color', 'red');
+            if (!(/\w+@\w+.\w+/).test(email)) {
+                $("#check_email").html('邮箱格式不正确!');
                 return false;
             }
 
@@ -43,7 +43,7 @@
                     if (res == 'allow') {
                         $("#check_email").html('该邮箱名可以使用!').css('color', 'green');
                     } else {
-                        $("#check_email").html('该邮箱名已注册!').css('color', 'red');
+                        $("#check_email").html('该邮箱名已注册!');
 
                         return false;
                     }
@@ -58,36 +58,115 @@
             var password = $(this).val();
 
             if ($.trim(password).length == 0) {
-                $("#password").html('密码不能为空!');
-
+                $("#check_password").html('密码不能为空!');
                 return false;
             }
+
+            if (password.length < 8) {
+                $("#check_password").html('密码不能少于8位!');
+                return false;
+            }
+
+            $("#check_password").empty();
+
+        });
+
+        $("#nickname").blur(function () {
+            var nickname = $(this).val();
+
+            if (nickname.length == 0) {
+                $("#check_nickname").html('昵称不能为空!');
+                return false;
+            }
+
+            $.ajax({
+                url: '{:url(\'index/index/checkNickname\')}',
+                type: 'POST',
+                data: {nickname: nickname},
+                dataType: 'json',
+                success: function (res) {
+                    if (res == 'allow') {
+                        $("#check_nickname").html('该昵称可以使用!').css('color', 'green');
+                    } else {
+                        $("#check_nickname").html('该昵称已存在!');
+
+                        return false;
+                    }
+                },
+                error: function () {
+                    alert('系统出错!');
+                }
+            });
+        });
+
+        $("#mobile").blur(function () {
+            var mobile = $(this).val();
+
+            if (mobile.length == 0) {
+                $("#check_mobile").html('手机号不能为空!');
+                return false;
+            }
+
+            if (!(/^1[34578][0-9]{9}$/).test(mobile)) {
+                $("#check_mobile").html('手机号格式不正确!');
+                return false;
+            }
+
+            $("#check_mobile").empty();
         });
 
     });
+
+    function checkInput() {
+
+        var email = $("#email").val();
+        var password = $("#password").val();
+        var nickname = $("#nickname").val();
+        var mobile = $("#mobile").val();
+
+        if (email.length == 0) {
+            $("#check_email").html('邮箱名不能为空!');
+            return false;
+        }
+
+        if (!(/\w+@\w+.\w+/).test(email)) {
+            $("#check_email").html('邮箱格式不正确!');
+            return false;
+        }
+
+
+    }
+
 </script>
-<h3>用户注册</h3>
+
+
 <div style="text-align: center">
+
     <div style="display: inline-block">
         <form class="container" method="post" action="{:url('index/index/registerOk')}">
             <div class="tag">
                 <div style="float: left;margin-right: 1rem;">邮箱：<input name="email" id="email"></div>
-                <p id="check_email" style="font-size: .9rem"></p>
+                <p id="check_email"></p>
             </div>
 
             <div class="tag">
-                密码：<input class="password" type="password" name="password" id="password">
+                <div style="float: left;margin-right: 1rem;">密码：<input type="password" name="password" id="password">
+                </div>
+                <p id="check_password"></p>
             </div>
 
             <div class="tag">
-                昵称：<input name="nickname" id="nickname">
+                <div style="float: left;margin-right: 1rem;">昵称：<input name="nickname" id="nickname"></div>
+                <p id="check_nickname"></p>
             </div>
+
             <div class="tag">
-                手机：<input name="mobile" id="mobile">
+                <div style="float: left;margin-right: 1rem;">手机：<input name="mobile" id="mobile"></div>
+                <p id="check_mobile"></p>
             </div>
 
 
-            <button>注册</button>
+            <button onclick="return checkInput()">注册</button>
 
 
         </form>
