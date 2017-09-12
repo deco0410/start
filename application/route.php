@@ -44,4 +44,13 @@ return [
         'delete_role' => 'index/user/deleteRole',
     ],
 
+    'fy' => 'fuiou/index/index',
+    'order' => 'fuiou/index/index',
+    'query' => 'fuiou/index/query',
+    'refund' => 'fuiou/index/refund',
+
+/*    '[fy]' => [
+
+    ],*/
+
 ];

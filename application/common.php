@@ -28,8 +28,13 @@ function checkReg()
 
 }
 
-
-
+function nvl($aStr)
+{
+    if ($aStr == null)
+        return "";
+    else
+        return $aStr;
+}
 
 
 function email($qq)
