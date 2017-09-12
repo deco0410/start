@@ -22,6 +22,18 @@ class Index extends Controller
 
     }
 
+     public function checkNickname()
+    {
+        $data = input('post.')['nickname'];
+        $check = UserModel::get(['nickname' => $data]);
+        if ($check) {
+            return 'deny';
+        } else {
+            return 'allow';
+        }
+
+    }
+
 
     public function register()
     {
