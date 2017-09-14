@@ -17,6 +17,19 @@
 
     }
 
+    h2{
+        color: #4288ce;
+        text-align: left
+    }
+
+      a {
+            color: #4288ce;
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-size: 14px;
+        }
+
+
 </style>
 <script>
     $(function () {
@@ -25,12 +38,12 @@
             var email = $(this).val();
 
             if (email.length == 0) {
-                $("#check_email").html('邮箱名不能为空!');
+                $("#check_email").html('邮箱名不能为空!').css('color', 'red');
                 return false;
             }
 
             if (!(/\w+@\w+.\w+/).test(email)) {
-                $("#check_email").html('邮箱格式不正确!');
+                $("#check_email").html('邮箱格式不正确!').css('color', 'red');
                 return false;
             }
 
@@ -43,7 +56,7 @@
                     if (res == 'allow') {
                         $("#check_email").html('该邮箱名可以使用!').css('color', 'green');
                     } else {
-                        $("#check_email").html('该邮箱名已注册!');
+                        $("#check_email").html('该邮箱名已注册!').css('color', 'red');
 
                         return false;
                     }
@@ -58,12 +71,12 @@
             var password = $(this).val();
 
             if (password.length == 0) {
-                $("#check_password").html('密码不能为空!');
+                $("#check_password").html('密码不能为空!').css('color', 'red');
                 return false;
             }
 
             if (password.length < 8) {
-                $("#check_password").html('密码不能少于8位!');
+                $("#check_password").html('密码不能少于8位!').css('color', 'red');
                 return false;
             }
 
@@ -75,7 +88,7 @@
             var nickname = $(this).val();
 
             if (nickname.length == 0) {
-                $("#check_nickname").html('昵称不能为空!');
+                $("#check_nickname").html('昵称不能为空!').css('color', 'red');
                 return false;
             }
 
@@ -88,7 +101,7 @@
                     if (res == 'allow') {
                         $("#check_nickname").html('该昵称可以使用!').css('color', 'green');
                     } else {
-                        $("#check_nickname").html('该昵称已存在!');
+                        $("#check_nickname").html('该昵称已存在!').css('color', 'red');
                         return false;
                     }
                 },
@@ -102,12 +115,12 @@
             var mobile = $(this).val();
 
             if (mobile.length == 0) {
-                $("#check_mobile").html('手机号不能为空!');
+                $("#check_mobile").html('手机号不能为空!').css('color', 'red');
                 return false;
             }
 
             if (!(/^1[34578][0-9]{9}$/).test(mobile)) {
-                $("#check_mobile").html('手机号格式不正确!');
+                $("#check_mobile").html('手机号格式不正确!').css('color', 'red');
                 return false;
             }
 
@@ -124,38 +137,38 @@
         var mobile = $("#mobile").val();
 
         if (email.length == 0) {
-            $("#check_email").html('邮箱名不能为空!');
+            $("#check_email").html('邮箱名不能为空!').css('color', 'red');
             return false;
         }
 
         if (!(/\w+@\w+.\w+/).test(email)) {
-            $("#check_email").html('邮箱格式不正确!');
+            $("#check_email").html('邮箱格式不正确!').css('color', 'red');
             return false;
         }
 
         if (password.length == 0) {
-            $("#check_password").html('密码不能为空!');
+            $("#check_password").html('密码不能为空!').css('color', 'red');
             return false;
         }
 
         if (password.length < 8) {
-            $("#check_password").html('密码不能少于8位!');
+            $("#check_password").html('密码不能少于8位!').css('color', 'red');
             return false;
         }
 
         if (nickname.length == 0) {
-            $("#check_nickname").html('昵称不能为空!');
+            $("#check_nickname").html('昵称不能为空!').css('color', 'red');
             return false;
         }
 
 
         if (mobile.length == 0) {
-            $("#check_mobile").html('手机号不能为空!');
+            $("#check_mobile").html('手机号不能为空!').css('color', 'red');
             return false;
         }
 
         if (!(/^1[34578][0-9]{9}$/).test(mobile)) {
-            $("#check_mobile").html('手机号格式不正确!');
+            $("#check_mobile").html('手机号格式不正确!').css('color', 'red');
             return false;
         }
 
@@ -168,7 +181,7 @@
 <div style="text-align: center">
 
     <div style="display: inline-block">
-        <h3 style="text-align: left">用户注册</h3>
+        <h2>用户注册</h2>
         <form class="container" method="post" action="{:url('index/index/registerOk')}">
             <div class="tag">
                 <div style="float: left;margin-right: 1rem;">邮箱：<input name="email" id="email" value=""></div>
@@ -193,6 +206,7 @@
 
             <div class="tag" style="text-align: left;margin-top:15px">
                 <button onclick="return checkInput()">注册</button>
+                <a style="margin-left: 1rem" href="{:url('index')}">返回主页</a>
             </div>
 
 

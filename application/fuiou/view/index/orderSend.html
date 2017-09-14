@@ -30,8 +30,9 @@ try{
 	$mchnt_key = nvl($_REQUEST['mchnt_key']);//32位的商户密钥
 
 	$signDataStr = $cur_type . "|" . $mchnt_cd . "|" . $order_id . "|" . $order_amt . "|" . $order_pay_type . "|" .
-                     $page_notify_url . "|" . $back_notify_url . "|" . $order_valid_time . "|" .
-                     $iss_ins_cd . "|" . $goods_name . "|" . $goods_display_url . "|" . $rem . "|" . $rcvr . "|" . $ver . "|" . $mchnt_key;
+                   $page_notify_url . "|" . $back_notify_url . "|" . $order_valid_time . "|" .
+                   $iss_ins_cd . "|" . $goods_name . "|" . $goods_display_url . "|" . $rem . "|" . $rcvr . "|" .
+                   $ver . "|" . $mchnt_key;
 
 	$str_md5 = md5($signDataStr);
 

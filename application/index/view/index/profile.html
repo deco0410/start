@@ -1,0 +1,145 @@
+{include file="user/header" title="用户信息" /}
+<style>
+    .tag {
+        width: 25rem;
+        height: 30px;
+        text-align: left;
+
+    }
+
+    input {
+        width: 137px;
+    }
+
+    p {
+        font-size: .9rem;
+        color: red;
+
+    }
+
+    h2 {
+        color: #4288CE;
+        text-align: left
+    }
+
+    .radio {
+        width: 1rem;
+    }
+
+    label {
+        font-size: .9rem;
+    }
+
+    a {
+        color: #333;
+        font-size: .9rem;
+        text-decoration: none;
+    }
+
+
+</style>
+
+
+<div style="text-align: center">
+
+    <div style="display: inline-block">
+        <h2>用户信息</h2>
+        <form class="container" method="post" action="{:url('editProfile')}">
+
+            <div class="tag">
+                <div style="float: left;margin-right: 1rem;">
+                    昵称：<input name="nickname" id="nickname" value="{$info.nickname}">
+                    <p id="check_nickname"></p>
+                </div>
+            </div>
+
+            <div class="tag">
+                <div style="float: left;margin-right: 1rem;">
+                    手机：<input name="mobile" id="mobile" value="{$info.mobile}">
+                    <p id="check_mobile"></p>
+                </div>
+            </div>
+
+            <div class="tag">
+                <div style="float: left;margin-right: 1rem;">
+                    性别：
+                    <label for="unknown">保密</label><input class="radio" type="radio" id="unknown" name="gender"
+                                                          value="0" checked>
+                    <label for="male">男</label><input class="radio" type="radio" id="male" name="gender" value="1">
+                    <label for="female">女</label><input class="radio" type="radio" id="female" name="gender" value="2">
+                </div>
+            </div>
+
+            <div class="tag">
+                <div style="float: left;margin-right: 1rem;">
+                    生日：<input type="date" name="birthday" id="birthday" value="{$info.profile.birthday}">
+                    <p id="check_birthday"></p>
+                </div>
+            </div>
+
+            <div class="tag">
+                <div style="float:left;margin-right: 1rem;">
+                    地址：<input style="width: 250px;" name="address" id="address" value="{$info.profile.address}">
+                </div>
+            </div>
+
+            <div class="tag" style="text-align: left;margin-top:15px">
+                <button onclick="return checkInput()">修改</button>
+                <a style="margin-left: 1rem" href="{:url('index')}">返回主页</a>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+<script>
+    $(function () {
+        var gender = "{$info.profile.gender}";
+        if (gender) {
+            $(".radio").eq(parseInt(gender)).attr("checked", true);
+        }
+    });
+
+    function checkInput() {
+
+        var nickname = $("#nickname").val();
+        var mobile = $("#mobile").val();
+        var birthday = $("#birthday").val();
+
+        if (nickname.length == 0) {
+            $("#check_nickname").html('昵称不能为空!').css('color', 'red');
+            return false;
+        }
+
+        //TODO 昵称用ajax查询
+
+
+
+
+
+        if (mobile.length == 0) {
+            $("#check_mobile").html('手机号不能为空!').css('color', 'red');
+            return false;
+        }
+
+        if (!(/^1[34578][0-9]{9}$/).test(mobile)) {
+            $("#check_mobile").html('手机号格式不正确!').css('color', 'red');
+            return false;
+        }
+
+        if (birthday) {
+            if (!(/\d{4}-\d{2}-\d{2}/).test(birthday)) {
+                $("#check_birthday").html('日期格式不正确!').css('color', 'red');
+                return false;
+            }
+        }
+
+    }
+</script>
+
+
+
+
+
+
+

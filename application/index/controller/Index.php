@@ -14,7 +14,7 @@ class Index extends Controller
 
     }
 
-    //在注册界面检查用户名是否存在
+
     public function checkEmail()
     {
         $data = input('post.')['email'];
@@ -62,8 +62,8 @@ class Index extends Controller
                     $user->password = md5($data['password']);
                     $user->nickname = $data['nickname'];
                     $user->mobile = $data['mobile'];
-
                     if ($user->save()) {
+
                         $this->success('注册成功！', 'login');
 
                     } else {
@@ -120,8 +120,12 @@ class Index extends Controller
     }
 
     public function getProfile(){
+
         $data = input('nickname');
-        p($data);exit;
+        $user_info =  UserModel::get(['nickname'=> $data], 'profile');
+
+        $this->assign('info', $user_info);
+        return $this->fetch('profile');
     }
 
 

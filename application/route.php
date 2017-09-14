@@ -22,7 +22,7 @@ return [
         ':name' => ['index/hello', ['method' => 'get']],
     ],
 
-    'email/:qq' => 'index/index/email'  ,
+    'email/:qq' => 'index/index/email' ,
 
 
     //'register' => 'index/index/register',
