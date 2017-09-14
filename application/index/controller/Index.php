@@ -95,13 +95,13 @@ class Index extends Controller
 
         if ($check) {
             if ($check['password'] == md5($data['password'])) {
-                Session::set('email', $check['email']);
-                Session::set('nickname', $check['nickname']);
+                session('email', $check['email']);
+                session('nickname', $check['nickname']);
 
                 $this->success('登录成功!', 'index');
 
             } else {
-                Session::set('email', $check['email']);
+                session('email', $check['email']);
                 $this->error('密码错误,请重新输入密码!', 'login');
             }
 
