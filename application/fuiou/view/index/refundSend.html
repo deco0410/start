@@ -17,11 +17,11 @@ $mchnt_cd = nvl( $_REQUEST['mchnt_cd']);
 $origin_order_date = nvl( $_REQUEST['origin_order_date']);
 $origin_order_id = nvl( $_REQUEST['origin_order_id']);
 $refund_amt = nvl( $_REQUEST['refund_amt']);
-$refund_cur_type = nvl( $_REQUEST['refund_cur_type']);
+$back_notify_url = nvl($_REQUEST['back_notify_url']);
 $rem = nvl( $_REQUEST['rem']);
 $mchnt_key = nvl( $_REQUEST['mchnt_key']);
 
-$signDataStr = $mchnt_cd . "|" . $origin_order_date . "|" . $origin_order_id . "|" . $refund_amt . "|" . $refund_cur_type . "|" . $rem . "|" . $mchnt_key;
+$signDataStr = $mchnt_cd . "|" . $origin_order_date . "|" . $origin_order_id . "|" . $refund_amt . "|" . $back_notify_url . "|" . $rem . "|" . $mchnt_key;
 $str_md5 = md5($signDataStr);
 
 ?>
@@ -33,7 +33,7 @@ $str_md5 = md5($signDataStr);
 <input type="hidden" value = '<?php echo $origin_order_id; ?>' name="origin_order_id"/>
 <input type="hidden" value = '<?php echo $refund_amt; ?>' name="refund_amt"/>
 <input type="hidden" value = '<?php echo $rem; ?>' name="rem"/>
-<input type="hidden" value = '<?php echo $refund_cur_type; ?>' name="refund_cur_type"/>
+<input type="hidden" value = '<?php echo $back_notify_url; ?>' name="back_notify_url"/>
 </form>
 </body>
 <?php

@@ -35,8 +35,9 @@
         }
 
         a {
-            color: #868686;
+            color: #333;
             cursor: pointer;
+            text-decoration: none;
         }
 
         a:hover {
@@ -49,7 +50,7 @@
             padding: 6px 0;
             margin: 6px 0 0;
             font-size: 28px;
-            border-bottom: 1px solid #eee;
+
         }
 
         div {
@@ -61,29 +62,24 @@
             border-bottom: 1px solid #eee;
         }
 
-        .copyright {
-            margin-top: 24px;
-            padding: 12px 0;
-            border-top: 1px solid #eee;
-        }
+
+
     </style>
 </head>
 <body>
 <h2>首页</h2>
-<div style="float: right">
+<div style="float: right;">
+    {if condition="$Think.session.nickname"}
+    欢迎回来，<a style="color: #4288ce;" href="{:url('getProfile', ['nickname'=>$Think.session.nickname])}">{$Think.session.nickname}</a>
+    <a style="margin-left: 25px; font-size: .9rem" href="{:url('logout')}">退出</a>
+    {else /}
+    <a href="{:url('login')}">登录</a>{$Think.session.nickname}
+    <a style="margin-left: 25px;" href="{:url('register')}">注册</a>
+    {/if}
 
-    <a href="{:url('login')}">登录</a>
-
-
-
-    <a href="{:url('index/index/register')}">注册</a>
 </div>
 
 
-<div class="copyright">
-    <a title="官方网站" href="http://www.thinkphp.cn">ThinkPHP</a>
-    <span>V5</span>
-    <span>{ 十年磨一剑-为API开发设计的高性能框架 }</span>
-</div>
+
 </body>
 </html>

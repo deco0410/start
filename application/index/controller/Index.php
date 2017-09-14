@@ -8,11 +8,17 @@ use think\Controller, think\Db, think\Session, think\Request;
 
 class Index extends Controller
 {
+    public function index()
+    {
+        return $this->fetch();
+
+    }
+
     //在注册界面检查用户名是否存在
     public function checkEmail()
     {
-        //$data = input('post.')['email'];
-        $data = Request::instance()->post('email');
+        $data = input('post.')['email'];
+        //$data = Request::instance()->post('email');
         $check = UserModel::get(['email' => $data]);
         if ($check) {
             return 'deny';
@@ -22,7 +28,7 @@ class Index extends Controller
 
     }
 
-     public function checkNickname()
+    public function checkNickname()
     {
         $data = input('post.')['nickname'];
         $check = UserModel::get(['nickname' => $data]);
@@ -37,46 +43,43 @@ class Index extends Controller
 
     public function register()
     {
-
         return $this->fetch();
 
     }
 
     public function registerOk()
     {
-
         $data = input('post.');
-
         $validate = $this->validate($data, 'Index');   //用validate文件夹下与控制器同名(此处为Index)的验证器
 
-        if ($validate !== true) {
-            return $validate;
+        if ($validate == true) {
 
-        } else {
-            $check = UserModel::get(['email' => $data['email']]);
+            if ($this->checkEmail() == 'allow') {
 
-            if ($check) {
-                $this->error('该邮箱名已经注册!', 'index/index/register');
-            }
-            $user = new UserModel();
-            $user->user_name = $data['email'];
-            $user->password = md5($data['password']);
+                if ($this->checkNickname() == 'allow') {
+                    $user = new UserModel();
+                    $user->email = $data['email'];
+                    $user->password = md5($data['password']);
+                    $user->nickname = $data['nickname'];
+                    $user->mobile = $data['mobile'];
 
-            if ($user->save()) {
+                    if ($user->save()) {
+                        $this->success('注册成功！', 'login');
 
-                $this->success('注册成功！', 'login');
-
+                    } else {
+                        $this->error('注册失败', 'register');
+                    }
+                } else {
+                    $this->error('该昵称已经存在!', 'register');
+                }
             } else {
-                $this->error('注册失败', 'register');
+                $this->error('该邮箱名已经注册!', 'register');
             }
-
+        } else {
+            return $validate;
         }
 
-    }  /*   $this->validate($data['code'],[
-               'captcha|验证码' => 'require|captcha'
-           ]) ;
-          */
-
+    }
 
 
     public function login()
@@ -92,11 +95,14 @@ class Index extends Controller
 
         if ($check) {
             if ($check['password'] == md5($data['password'])) {
-                Session::set('email', $data['email']);
+                Session::set('email', $check['email']);
+                Session::set('nickname', $check['nickname']);
+
                 $this->success('登录成功!', 'index');
 
             } else {
-                $this->error('密码错误,请重新登录!', 'login');
+                Session::set('email', $check['email']);
+                $this->error('密码错误,请重新输入密码!', 'login');
             }
 
         } else {
@@ -105,17 +111,19 @@ class Index extends Controller
 
     }
 
-    public function hello()
+
+    public function logout()
     {
-        echo 'hello';
-        // $select = Db::name('user')->page(1, 7)->select();
+
+        session(null);
+        return $this->fetch('index');
     }
 
-    public function index()
-    {
-        return $this->fetch();
-
+    public function getProfile(){
+        $data = input('nickname');
+        p($data);exit;
     }
+
 
     /* public function save($name = '')
      {

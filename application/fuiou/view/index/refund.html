@@ -42,10 +42,8 @@ table{
 		    <td width="200" class="bg_gray" align="right" >退款金额：&nbsp;&nbsp;</td>
 		    <td class="bg_yellow2" align="left">&nbsp;&nbsp;<input type="text" name="refund_amt" size='30' value='2000'/></td>
 		  </tr>
-		  <tr>
-		    <td width="200" class="bg_gray" align="right" >退款币种：&nbsp;&nbsp;</td>
-		    <td class="bg_yellow2" align="left">&nbsp;&nbsp;<input type="text" name="refund_cur_type" size='30' value='156'/></td>
-		  </tr>
+		<input type="hidden" name="back_notify_url" value="{:url('fuiou/index/orderResult')}">
+
 		  <tr>
 		    <td width="200" class="bg_gray" align="right" >备注：&nbsp;&nbsp;</td>
 		    <td class="bg_yellow2" align="left">&nbsp;&nbsp;<input type="text" name="rem" size='30' maxlength='100' value='错了'/></td>

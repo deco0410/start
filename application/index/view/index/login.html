@@ -27,12 +27,15 @@
         .form .btn {
             margin: 6px;
             padding: 6px;
-            width: 120px;
-            font-size: 16px;
+            width: 100px;
+            font-size: 14px;
             border: 1px solid #D4D4D4;
             cursor: pointer;
             background: #eee;
+
         }
+
+
 
         a {
             color: #868686;
@@ -73,9 +76,12 @@
 
 
 <FORM method="post" class="form" action="{:url('loginOk')}">
-    昵称：<INPUT class="text" name="user_name" value="{$Request.session.user_name}"><br/>
-    密码：<INPUT type="password" class="text" name="password" ><br/>
-    <INPUT type="submit" class="btn" value="登录">
+    邮箱：<INPUT class="text" name="email" value="{$Request.session.email}"><br/>
+    密码：<INPUT type="password" class="text" name="password"><br/>
+    <div style="padding-left: 2.75rem">
+        <INPUT type="submit" class="btn" value="登    录">
+        <a style="margin-left: 1.5rem;font-size: 14px; color: black;" href="{:url('register')}">新用户注册</a>
+    </div>
 </FORM>
 <div class="copyright">
     <a title="官方网站" href="http://www.thinkphp.cn">ThinkPHP</a>
