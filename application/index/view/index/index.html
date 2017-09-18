@@ -15,6 +15,12 @@
             font-size: 16px;
         }
 
+        #menu a{
+            color:#333;
+            font-size: .9rem;
+            margin-left: 12px;
+        }
+
         .form .text {
             padding: 3px;
             margin: 2px 10px;
@@ -47,15 +53,10 @@
         h2 {
             color: #4288ce;
             font-weight: 400;
-            padding: 6px 0;
-            margin: 6px 0 0;
+
             font-size: 28px;
-            border-bottom: 1px solid #999999;
+            /*border-bottom: 1px solid #999999;*/
 
-        }
-
-        div {
-            margin: 8px;
         }
 
         .info {
@@ -65,17 +66,26 @@
 
     </style>
 </head>
-<body>
-<h2>首页</h2>
-<div style="float: right;">
-    {if condition="$Think.session.nickname"}
-    欢迎回来，<a style="color: #4288ce;" href="{:url('getProfile', ['nickname'=>$Think.session.nickname])}">{$Think.session.nickname}</a>
-    <a style="margin-left: 25px; font-size: .9rem" href="{:url('logout')}">退出</a>
-    {else /}
-    <a href="{:url('login')}">登录</a>{$Think.session.nickname}
-    <a style="margin-left: 25px;" href="{:url('register')}">注册</a>
-    {/if}
-</div>
+<body style="text-align: center;">
+<div style="width: 950px;display: inline-block;">
+    <div id="menu" style="float: right; font-size: .9rem">
+        <a href="{:url('index')}">首页</a>
+        {if condition="$Think.session.nickname"}
+        <a href="{:url('getProfile', ['nickname'=>$Think.session.nickname])}">{$Think.session.nickname}</a>
+        <a href="{:url('newBlog')}">写博客</a>
+        <a href="{:url('logout')}">退出</a>
+        {else /}
+        <a href="{:url('login')}">登录</a>{$Think.session.nickname}
+        <a href="{:url('register')}">注册</a>
+        {/if}
+    </div>
 
+    <h2 style="margin-bottom: 0">{$Think.session.nickname}的博客</h2>
+    <p style="margin-top: 0; font-size: .8rem;color:#999">http://www.easyBlog.com.cn/{$Think.session.nickname}</p>
+
+     <div>
+        <a>首页</a><a>目录</a><a>我的资料</a>
+    </div>
+</div>
 </body>
 </html>

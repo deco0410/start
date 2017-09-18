@@ -5,7 +5,7 @@ use think\Controller;
 
 class Blog extends Controller
 {
-    public function add(){
+    public function newBlog(){
         echo 'add';
     }
 

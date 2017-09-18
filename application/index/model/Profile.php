@@ -27,10 +27,10 @@ class Profile extends Model
         }
     }*/
 
-    protected function getGenderAttr($value){
+   /* protected function getGenderAttr($value){
         $status = [1 => 'male', 2 => 'female', 0 => 'unknown'];
         return $status[$value];
-    }
+    }*/
 
    /* protected function getBirthdayAttr($birthday)
     {

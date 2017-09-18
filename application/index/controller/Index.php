@@ -30,13 +30,34 @@ class Index extends Controller
 
     public function checkNickname()
     {
-        $data = input('post.')['nickname'];
-        $check = UserModel::get(['nickname' => $data]);
-        if ($check) {
-            return 'deny';
+        $data = input('post.');
+        //修改页面的请求
+        if ($data['email']) {
+            //获取原昵称
+            $origin_nickname = UserModel::get(['email' => $data['email']])->value('nickname');
+            //查找新昵称
+            $check_nickname = UserModel::get(['nickname' => $data['nickname']]);
+            //用户修改昵称时判断新昵称是否存在（不包括原昵称）
+            if ($origin_nickname != $data['nickname'] && !$check_nickname) {
+                return 'allow';
+
+            } elseif ($origin_nickname == $data['nickname']) {
+
+                return 'unchanged';
+
+            } else {
+                return 'deny';
+            }
+            //注册页面的请求
         } else {
-            return 'allow';
+            $check = UserModel::get(['nickname' => $data['nickname']]);
+            if ($check) {
+                return 'deny';
+            } else {
+                return 'allow';
+            }
         }
+
 
     }
 
@@ -119,14 +140,68 @@ class Index extends Controller
         return $this->fetch('index');
     }
 
-    public function getProfile(){
+    public function getProfile()
+    {
 
         $data = input('nickname');
-        $user_info =  UserModel::get(['nickname'=> $data], 'profile');
+        $user_info = UserModel::get(['nickname' => $data], 'profile');
 
         $this->assign('info', $user_info);
         return $this->fetch('profile');
+
     }
+
+    public function editProfile()
+    {
+        $data = input('post.');
+        $email =  session('email');
+        $origin_nickname = UserModel::get(['email' => $email])->value('nickname');
+        $check_nickname  = UserModel::get(['nickname' => $data['nickname']]);
+
+
+        if (!$data['nickname']) {
+            $this->error('昵称不能为空！');
+
+        } elseif ($origin_nickname != $data['nickname'] && $check_nickname) {
+            $this->error('昵称已经存在！');
+
+        } else {
+            if (!$data['mobile']) {
+                $this->error('手机号不能为空！');
+
+            } else {
+                $pattern = '/^1[34578][0-9]{9}$/';
+                preg_match($pattern, $data['mobile'], $match);
+
+                if (!$match) {
+                    $this->error('手机号格式不正确');
+
+                } else {
+                    $user = UserModel::get(['email' => $email]);
+                    $update_user = $user->save(['nickname'=>$data['nickname'], 'mobile'=>$data['mobile']]);
+                    $update_profile = $user->profile()->select()?
+                                      $user->profile->save(['gender'=>$data['gender'], 'birthday'=>$data['birthday'], 'address'=>$data['address']]):
+                                      $user->profile()->save(['gender'=>$data['gender'], 'birthday'=>$data['birthday'], 'address'=>$data['address']]);
+
+
+                    if ($update_user || $update_profile) {
+                        session('nickname', $user['nickname']);
+                        $this->success('用户信息更新成功！', 'index');
+
+
+                   } else {
+                        $this->success('用户信息更新失败！');
+
+                   }
+                }
+            }
+
+
+        }
+
+
+    }
+
 
 
     /* public function save($name = '')

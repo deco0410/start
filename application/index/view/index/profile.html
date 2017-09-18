@@ -39,8 +39,8 @@
 
 </style>
 
-
-<div style="text-align: center">
+<body>
+<div style="text-align: center;">
 
     <div style="display: inline-block">
         <h2>用户信息</h2>
@@ -49,22 +49,24 @@
             <div class="tag">
                 <div style="float: left;margin-right: 1rem;">
                     昵称：<input name="nickname" id="nickname" value="{$info.nickname}">
-                    <p id="check_nickname"></p>
+
                 </div>
+                <p id="check_nickname"></p>
             </div>
 
             <div class="tag">
                 <div style="float: left;margin-right: 1rem;">
                     手机：<input name="mobile" id="mobile" value="{$info.mobile}">
-                    <p id="check_mobile"></p>
+
                 </div>
+                 <p id="check_mobile"></p>
             </div>
 
             <div class="tag">
                 <div style="float: left;margin-right: 1rem;">
                     性别：
                     <label for="unknown">保密</label><input class="radio" type="radio" id="unknown" name="gender"
-                                                          value="0" checked>
+                                                          value="0" >
                     <label for="male">男</label><input class="radio" type="radio" id="male" name="gender" value="1">
                     <label for="female">女</label><input class="radio" type="radio" id="female" name="gender" value="2">
                 </div>
@@ -93,10 +95,13 @@
     </div>
 </div>
 <script>
+
     $(function () {
         var gender = "{$info.profile.gender}";
         if (gender) {
             $(".radio").eq(parseInt(gender)).attr("checked", true);
+        }else{
+            $(".radio").eq(0).attr("checked", true)
         }
     });
 
@@ -104,17 +109,34 @@
 
         var nickname = $("#nickname").val();
         var mobile = $("#mobile").val();
-        var birthday = $("#birthday").val();
+
 
         if (nickname.length == 0) {
             $("#check_nickname").html('昵称不能为空!').css('color', 'red');
             return false;
         }
 
-        //TODO 昵称用ajax查询
-
-
-
+        $.ajax({
+            url: '{:url(\'index/index/checkNickname\')}',
+            type: 'POST',
+            data: {nickname: nickname, email: "{$info.email}"},
+            dataType: 'json',
+            success: function (res) {
+                if (res == 'allow') {
+                    $("#check_nickname").html('该昵称可以使用!').css('color', 'green');
+                }
+                if (res == 'unchanged') {
+                    $("#check_nickname").empty();
+                }
+                if (res == 'deny') {
+                    $("#check_nickname").html('该昵称已存在!').css('color', 'red');
+                    return false;
+                }
+            },
+            error: function () {
+                alert('系统出错!');
+            }
+        });
 
 
         if (mobile.length == 0) {
@@ -127,15 +149,10 @@
             return false;
         }
 
-        if (birthday) {
-            if (!(/\d{4}-\d{2}-\d{2}/).test(birthday)) {
-                $("#check_birthday").html('日期格式不正确!').css('color', 'red');
-                return false;
-            }
-        }
 
     }
 </script>
+</body>
 
 
 
