@@ -56,7 +56,6 @@
 
             font-size: 28px;
             /*border-bottom: 1px solid #999999;*/
-
         }
 
         .info {
@@ -74,14 +73,17 @@
         <a href="{:url('getProfile', ['nickname'=>$Think.session.nickname])}">{$Think.session.nickname}</a>
         <a href="{:url('newBlog')}">写博客</a>
         <a href="{:url('logout')}">退出</a>
-        {else /}
+
         <a href="{:url('login')}">登录</a>{$Think.session.nickname}
         <a href="{:url('register')}">注册</a>
         {/if}
     </div>
-
+    {if condition="$Think.session.nickname"}
     <h2 style="margin-bottom: 0">{$Think.session.nickname}的博客</h2>
     <p style="margin-top: 0; font-size: .8rem;color:#999">http://www.easyBlog.com.cn/{$Think.session.nickname}</p>
+    {else /}
+
+    {/if}
 
      <div>
         <a>首页</a><a>目录</a><a>我的资料</a>

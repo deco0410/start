@@ -154,10 +154,9 @@ class Index extends Controller
     public function editProfile()
     {
         $data = input('post.');
-        $email =  session('email');
+        $email = session('email');
         $origin_nickname = UserModel::get(['email' => $email])->value('nickname');
-        $check_nickname  = UserModel::get(['nickname' => $data['nickname']]);
-
+        $check_nickname = UserModel::get(['nickname' => $data['nickname']]);
 
         if (!$data['nickname']) {
             $this->error('昵称不能为空！');
@@ -178,30 +177,25 @@ class Index extends Controller
 
                 } else {
                     $user = UserModel::get(['email' => $email]);
-                    $update_user = $user->save(['nickname'=>$data['nickname'], 'mobile'=>$data['mobile']]);
-                    $update_profile = $user->profile()->select()?
-                                      $user->profile->save(['gender'=>$data['gender'], 'birthday'=>$data['birthday'], 'address'=>$data['address']]):
-                                      $user->profile()->save(['gender'=>$data['gender'], 'birthday'=>$data['birthday'], 'address'=>$data['address']]);
-
+                    $update_user = $user->save(['nickname' => $data['nickname'], 'mobile' => $data['mobile']]);
+                    $update_profile = $user->profile()->select() ?
+                        $user->profile->save(['gender' => $data['gender'], 'birthday' => $data['birthday'], 'address' => $data['address']]) :
+                        $user->profile()->save(['gender' => $data['gender'], 'birthday' => $data['birthday'], 'address' => $data['address']]);
 
                     if ($update_user || $update_profile) {
                         session('nickname', $user['nickname']);
                         $this->success('用户信息更新成功！', 'index');
 
-
-                   } else {
+                    } else {
                         $this->success('用户信息更新失败！');
 
-                   }
+                    }
                 }
             }
 
-
         }
 
-
     }
-
 
 
     /* public function save($name = '')
