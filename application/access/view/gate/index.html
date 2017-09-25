@@ -10,7 +10,7 @@
         }
 
         .input {
-            width: 20rem;
+            width: 16rem;
         }
 
         div {
@@ -27,7 +27,7 @@
             text-align: left
         }
 
-        p{
+        p {
             font-size: .9rem;
             display: inline;
 
@@ -42,13 +42,13 @@
 <h2>微门禁</h2>
 <form id="form" method="post" action="{:url('access/gate/wmj')}">
     <div>APPID:</div>
-    <input class="input" id="appid" name="appid" value="wmj_rbVcCOLpXf2"><br/>
+    <input class="input" id="appid" name="appid" value="wmj_rbVcCOLpXf2"><p> 在微门禁的开放平台上获得</p><br/>
     <div>APPSECRET:</div>
-    <input class="input" id="appsecret" name="appsecret" value="oGLjlw4Clrj0WPDsrBMyLdqes4GuZAns"><br/>
+    <input class="input" id="appsecret" name="appsecret" value="oGLjlw4Clrj0WPDsrBMyLdqes4GuZAns"><p> 在微门禁的开放平台上获得</p><br/>
     <div>AESKEY:</div>
-    <input class="input" id="aeskey" name="aeskey" value="nc9TnOWrbjVwO5COnyA9363Bkd59AcVa"><br/>
+    <input class="input" id="aeskey" name="aeskey" value="nc9TnOWrbjVwO5COnyA9363Bkd59AcVa"><p> 加密选项(如不加密可为空),在微门禁的开放平台上获得</p><br/>
     <div>LOCK_SN:</div>
-    <input class="input" id="lock_sn" name="lock_sn" value="WMJ16882194"><br/>
+    <input class="input" id="lock_sn" name="lock_sn" value="WMJ16882194"><p> 贴于购买模块上</p><br/>
 
     <input class="submit" style="width: 6rem;" type="submit" name="action" value="注册模块">
     &nbsp;&nbsp;<p>{$post_state|default=''}</p>&nbsp;&nbsp;&nbsp;&nbsp;
