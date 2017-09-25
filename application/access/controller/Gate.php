@@ -9,7 +9,6 @@ class Gate extends Controller
 {
     public function index()
     {
-
         return $this->fetch();
 
     }
@@ -29,7 +28,7 @@ class Gate extends Controller
             $result = httpPost('https://www.wmj.com.cn/api/postlock.html?appid=' . $appid . '&appsecret=' . $appsecret, $lock_sn);
             $result = trim($result, "\xEF\xBB\xBF"); //去除BOM头
             $result = json_decode($result, true);
-            $state = $result['state'] == 1 ? '模块添加成功' : '模块添加失败';
+            $state = $result['state'] == 1 ? '模块添加成功,' : '模块添加失败,';
             $msg = $result['state_msg'];
             $this->assign('post_state', $state);
             $this->assign('post_msg', $msg);
@@ -41,7 +40,7 @@ class Gate extends Controller
             $result = httpPost('https://www.wmj.com.cn/api/lockstate.html?appid=' . $appid . '&appsecret=' . $appsecret, $lock_sn);
             $result = trim($result, "\xEF\xBB\xBF"); //去除BOM头
             $result = json_decode($result, true);
-            $state = $result['state'] == 1 ? '模块在线' : '模块不在线';
+            $state = $result['state'] == 1 ? '模块在线,' : '模块不在线,';
             $msg = $result['state_msg'];
             $this->assign('check_state', $state);
             $this->assign('check_msg', $msg);
@@ -53,7 +52,7 @@ class Gate extends Controller
             $result = httpPost('https://www.wmj.com.cn/api/openlock.html?appid=' . $appid . '&appsecret=' . $appsecret, $lock_sn);
             $result = trim($result, "\xEF\xBB\xBF"); //去除BOM头
             $result = json_decode($result, true);
-            $state = $result['state'] == 1 ? '开门成功' : '开门失败';
+            $state = $result['state'] == 1 ? '开门成功,' : '开门失败,';
             $msg = $result['state_msg'];
             $this->assign('open_state', $state);
             $this->assign('open_msg', $msg);
@@ -65,7 +64,7 @@ class Gate extends Controller
             $result = httpPost('https://www.wmj.com.cn/api/dellock.html?appid=' . $appid . '&appsecret=' . $appsecret, $lock_sn);
             $result = trim($result, "\xEF\xBB\xBF"); //去除BOM头
             $result = json_decode($result, true);
-            $state = $result['state'] == 1 ? '模块删除成功' : '模块删除失败';
+            $state = $result['state'] == 1 ? '模块删除成功,' : '模块删除失败,';
             $msg = $result['state_msg'];
             $this->assign('delete_state', $state);
             $this->assign('delete_msg', $msg);
