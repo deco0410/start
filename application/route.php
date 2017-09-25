@@ -43,4 +43,9 @@ return [
 
     ':author$' => 'index/blog/index',
 
+    '[gate]' => [
+        'index' => 'access/gate/index',
+
+    ],
+
 ];
