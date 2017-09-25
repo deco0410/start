@@ -2,9 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>门禁测试</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        body {
+            line-height: 2rem;
+        }
+
+        .input {
+            width: 20rem;
+        }
+
+        div {
+            float: left;
+            width: 7rem;
+        }
+
+        button {
+            width: 5rem;
+        }
+
+        h2 {
+            color: #4288ce;
+            text-align: left
+        }
+
+        p{
+            font-size: .9rem;
+            display: inline;
+
+        }
+    </style>
+    <script>
+
+
+    </script>
 </head>
 <body>
+<h2>微门禁</h2>
+<form id="form" method="post" action="{:url('access/gate/wmj')}">
+    <div>APPID:</div>
+    <input class="input" id="appid" name="appid" value="wmj_rbVcCOLpXf2"><br/>
+    <div>APPSECRET:</div>
+    <input class="input" id="appsecret" name="appsecret" value="oGLjlw4Clrj0WPDsrBMyLdqes4GuZAns"><br/>
+    <div>AESKEY:</div>
+    <input class="input" id="aeskey" name="aeskey" value="nc9TnOWrbjVwO5COnyA9363Bkd59AcVa"><br/>
+    <div>LOCK_SN:</div>
+    <input class="input" id="lock_sn" name="lock_sn" value="WMJ16882194"><br/>
 
+    <input class="submit" style="width: 6rem;" type="submit" name="action" value="注册模块">
+    &nbsp;&nbsp;<p>{$post_state|default=''}</p>&nbsp;&nbsp;&nbsp;&nbsp;
+    <p>{$post_msg|default=''}</p><br/>
+    <input class="submit" style="width: 6rem;" type="submit" name="action" value="检查模块">
+    &nbsp;&nbsp;<p>{$check_state|default=''}</p>&nbsp;&nbsp;&nbsp;&nbsp;
+    <p>{$check_msg|default=''}</p><br/>
+    <input class="submit" style="width: 6rem;" type="submit" name="action" value="开门">
+    &nbsp;&nbsp;<p>{$open_state|default=''}</p>&nbsp;&nbsp;&nbsp;&nbsp;
+    <p>{$open_msg|default=''}</p><br/>
+    <input class="submit" style="width: 6rem;" type="submit" name="action" value="注销模块">
+    &nbsp;&nbsp;<p>{$delete_state|default=''}</p>&nbsp;&nbsp;&nbsp;&nbsp;
+    <p>{$delete_msg|default=''}</p><br/>
+
+</form>
 </body>
+
 </html>

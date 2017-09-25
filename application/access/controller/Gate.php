@@ -1,48 +1,78 @@
 <?php
-namespace app\gym\Controller;
+
+namespace app\access\Controller;
 
 use think\Controller;
 
 
-class gateControl extends Controller
+class Gate extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         return $this->fetch();
 
     }
 
-    public function addModule()
+    public function wmj()
     {
-        header("Content-type: text/html; charset=utf-8");
 
-        define('APPID', 'wmj_Vsf536qRMP2');
-        define('APPSECRET', '6xjC923a4EK0v0f50JahJFsSwKdKLdIx');
-        define('AESKEY', ''); //AES加密密钥，不用就留空
+        $action = input('action');
+        $appid = input('appid');
+        $appsecret = input('appsecret');
+        $lock_sn = input('lock_sn');
+        $aeskey = input('aeskey');
+        $aes = new Aes();
+        $lock_sn = $aes->encrypt($lock_sn, $aeskey);  //传递数据经过AES加密，如果需要的话就用。
 
-        //$aes = new Aes();
+        if ($action == '注册模块') {
+            $result = httpPost('https://www.wmj.com.cn/api/postlock.html?appid=' . $appid . '&appsecret=' . $appsecret, $lock_sn);
+            $result = trim($result, "\xEF\xBB\xBF"); //去除BOM头
+            $result = json_decode($result, true);
+            $state = $result['state'] == 1 ? '模块添加成功' : '模块添加失败';
+            $msg = $result['state_msg'];
+            $this->assign('post_state', $state);
+            $this->assign('post_msg', $msg);
+            return $this->fetch('gate/index');
 
-        $lock_sn = 'WMJ18866364'; //锁的序列号，这个序列号贴在每个模块的标签上。
-        //$lock_sn = $aes->encrypt($lock_sn, AESKEY);  //传递数据经过AES加密，如果需要的话就用。
+        }
 
-        /*
-         *DEMO -- 第一步：提交模块到系统注册
-         */
-        $result = httpPost('https://www.wmj.com.cn/api/postlock.html?appid='.APPID.'&appsecret='.APPSECRET, $lock_sn);
-        /*
-         *DEMO -- 第二步：查询模块在线状态
-         */
-        //$result = httpPost('https://www.wmj.com.cn/api/lockstate.html?appid='.APPID.'&appsecret='.APPSECRET, $lock_sn);
-        /*
-         *DEMO -- 第三步：开门
-         */
-        //$result = httpPost('https://www.wmj.com.cn/api/openlock.html?appid=' . APPID . '&appsecret=' . APPSECRET, $lock_sn);
-        /*
-         *DEMO -- 删除锁接口，在不需要这个模块时可以通过这个接口删除。
-         */
-        //$result = httpPost('https://www.wmj.com.cn/api/dellock.html?appid='.APPID.'&appsecret='.APPSECRET, $lock_sn);
-        $result = trim($result, "\xEF\xBB\xBF"); //去除BOM头
-        print_r(json_decode($result, true));
+        if ($action == '检查模块') {
+            $result = httpPost('https://www.wmj.com.cn/api/lockstate.html?appid=' . $appid . '&appsecret=' . $appsecret, $lock_sn);
+            $result = trim($result, "\xEF\xBB\xBF"); //去除BOM头
+            $result = json_decode($result, true);
+            $state = $result['state'] == 1 ? '模块在线' : '模块不在线';
+            $msg = $result['state_msg'];
+            $this->assign('check_state', $state);
+            $this->assign('check_msg', $msg);
+            return $this->fetch('gate/index');
+
+        }
+
+        if ($action == '开门') {
+            $result = httpPost('https://www.wmj.com.cn/api/openlock.html?appid=' . $appid . '&appsecret=' . $appsecret, $lock_sn);
+            $result = trim($result, "\xEF\xBB\xBF"); //去除BOM头
+            $result = json_decode($result, true);
+            $state = $result['state'] == 1 ? '开门成功' : '开门失败';
+            $msg = $result['state_msg'];
+            $this->assign('opem_state', $state);
+            $this->assign('open_msg', $msg);
+            return $this->fetch('gate/index');
+
+        }
+
+        if ($action == '注销模块') {
+            $result = httpPost('https://www.wmj.com.cn/api/dellock.html?appid=' . $appid . '&appsecret=' . $appsecret, $lock_sn);
+            $result = trim($result, "\xEF\xBB\xBF"); //去除BOM头
+            $result = json_decode($result, true);
+            $state = $result['state'] == 1 ? '模块删除成功' : '模块删除失败';
+            $msg = $result['state_msg'];
+            $this->assign('delete_state', $state);
+            $this->assign('delete_msg', $msg);
+            return $this->fetch('gate/index');
+
+        }
+
     }
 
 }
