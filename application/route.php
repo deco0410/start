@@ -22,14 +22,6 @@ return [
         ':name' => ['index/hello', ['method' => 'get']],
     ],
 
-    'email/:qq' => 'index/index/email' ,
-
-
-    //'register' => 'index/index/register',
-    //'registerOk' => 'index/index/registerOk',
-
-
-
     '[user]'=>[
         'index' => 'index/user/index',
         'create' => 'index/user/create',
@@ -49,8 +41,6 @@ return [
     'query' => 'fuiou/index/query',
     'refund' => 'fuiou/index/refund',
 
-/*    '[fy]' => [
-
-    ],*/
+    ':author$' => 'index/blog/index',
 
 ];

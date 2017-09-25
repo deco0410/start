@@ -5,8 +5,9 @@ use think\Controller;
 
 class Blog extends Controller
 {
-    public function newBlog(){
-        echo 'add';
+    public function index($author){
+        $this->assign('author', $author);
+        $this->fetch('blog/index');
     }
 
 }
