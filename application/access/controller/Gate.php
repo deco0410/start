@@ -55,7 +55,7 @@ class Gate extends Controller
             $result = json_decode($result, true);
             $state = $result['state'] == 1 ? '开门成功' : '开门失败';
             $msg = $result['state_msg'];
-            $this->assign('opem_state', $state);
+            $this->assign('open_state', $state);
             $this->assign('open_msg', $msg);
             return $this->fetch('gate/index');
 
