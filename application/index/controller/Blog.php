@@ -3,7 +3,6 @@ namespace app\index\controller;
 
 use think\Controller;
 use app\index\model\User as UserModel;
-use think\Db;
 
 class Blog extends Controller
 {
@@ -13,11 +12,18 @@ class Blog extends Controller
 
         if($check_author){
             $this->assign('author', $author);
-            return $this->fetch('blog/index');
+            return view('blog/index');
 
         }else{
-            return $this->fetch('index/index');
+            return view('index/index');
         }
+    }
+
+    public function newBlog(){
+        $author = input('author');
+        $this->assign('author', $author);
+        return view('blog/newBlog');
+
     }
 
 

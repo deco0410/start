@@ -86,16 +86,20 @@
 
         $("#nickname").blur(function () {
             var nickname = $(this).val();
+            var email = "{$Think.session.email}";
+            //TODO
 
             if (nickname.length == 0) {
                 $("#check_nickname").html('昵称不能为空!').css('color', 'red');
                 return false;
+            }else{
+                $("#check_nickname").empty();
             }
 
             $.ajax({
                 url: '{:url(\'index/index/checkNickname\')}',
                 type: 'POST',
-                data: {nickname: nickname},
+                data: {nickname: nickname, email: email},
                 dataType: 'json',
                 success: function (res) {
                     if (res == 'allow') {

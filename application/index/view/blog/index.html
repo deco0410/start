@@ -97,13 +97,13 @@
             <td><a href="{:url('index/index/index')}">首页</a></td>
             <td><a id="nickname" href="{:url('index/index/getProfile', ['nickname'=>$Think.session.nickname])}"
                    style="color:#4288ce;">{$Think.session.nickname}</a></td>
-            <td><a href="{:url('newBlog')}">写博客</a></td>
+            <td><a href="{:url('index/blog/newBlog', ['author'=>$Think.session.nickname])}">写博客</a></td>
             <td><a href="{:url('index/index/logout')}">退出</a></td>
         </tr>
 
         <tr>
             <td></td>
-            <td class="sub_user"><a href="{:url('index', ['author'=>$Think.session.nickname])}">我的博客</a></td>
+            <td class="sub_user"><a href="{:url('index/blog/index', ['author'=>$Think.session.nickname])}">我的博客</a></td>
             <td></td>
             <td></td>
         </tr>
