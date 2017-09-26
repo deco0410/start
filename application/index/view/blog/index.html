@@ -15,8 +15,8 @@
             font-size: 16px;
         }
 
-        #menu a{
-            color:#333;
+        #menu a {
+            color: #333;
             font-size: .9rem;
             margin-left: 12px;
         }
@@ -64,23 +64,72 @@
             border-bottom: 1px solid #eee;
         }
 
-    </style>
+        td {
+            width: 4rem;
+            height: 1.25rem;
+        }
 
+        .sub_user {
+            display: none;
+        }
+
+    </style>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#nickname").mouseenter(function () {
+                $(".sub_user").css('display', 'block');
+            });
+
+            $("#header").mouseleave(function () {
+                $(".sub_user").css('display', 'none');
+            });
+        });
+    </script>
 
 </head>
 <body style="text-align: center;">
 <div style="width: 950px;display: inline-block;">
-    <div id="menu" style="float: right; font-size: .9rem">
-        <a href="{:url('index/index/index')}">首页</a>
+
+    <table id="header"  style="float: right;font-size: .9rem;">
         {if condition="$Think.session.nickname"}
-        <a id="nickname" href="{:url('index/index/getProfile', ['nickname'=>$Think.session.nickname])}" style="color:#4288ce;">{$Think.session.nickname}</a>
-        <a href="{:url('newBlog')}">写博客</a>
-        <a href="{:url('index/index/logout')}">退出</a>
+        <tr>
+            <td><a href="{:url('index/index/index')}">首页</a></td>
+            <td><a id="nickname" href="{:url('index/index/getProfile', ['nickname'=>$Think.session.nickname])}"
+                   style="color:#4288ce;">{$Think.session.nickname}</a></td>
+            <td><a href="{:url('newBlog')}">写博客</a></td>
+            <td><a href="{:url('index/index/logout')}">退出</a></td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td class="sub_user"><a href="{:url('index', ['author'=>$Think.session.nickname])}">我的博客</a></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td class="sub_user">修改密码</td>
+            <td></td>
+            <td></td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td class="sub_user">修改昵称</td>
+            <td></td>
+            <td></td>
+        </tr>
+
         {else /}
-        <a href="{:url('index/index/login')}">登录</a>{$Think.session.nickname}
-        <a href="{:url('index/index/register')}">注册</a>
+        <tr>
+            <td><a href="{:url('index/index/index')}">首页</a></td>
+            <td><a href="{:url('index/index/login')}">登录</a></td>
+            <td><a href="{:url('index/index/register')}">注册</a></td>
+        </tr>
         {/if}
-    </div>
+    </table>
 
     <h2 style="margin-bottom: 0">{$author}的博客</h2>
     <p style="margin-top: 0; font-size: .8rem;color:#999">http://www.easyBlog.com.cn/{$author}</p>
