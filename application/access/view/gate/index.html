@@ -42,13 +42,17 @@
 <h2>微门禁</h2>
 <form id="form" method="post" action="{:url('access/gate/wmj')}">
     <div>APPID:</div>
-    <input class="input" id="appid" name="appid" value="wmj_rbVcCOLpXf2"><p> 在微门禁的开放平台上获得</p><br/>
+    <input class="input" id="appid" name="appid" value="wmj_rbVcCOLpXf2">
+    <p> 在微门禁的开放平台上获得</p><br/>
     <div>APPSECRET:</div>
-    <input class="input" id="appsecret" name="appsecret" value="oGLjlw4Clrj0WPDsrBMyLdqes4GuZAns"><p> 在微门禁的开放平台上获得</p><br/>
+    <input class="input" id="appsecret" name="appsecret" value="oGLjlw4Clrj0WPDsrBMyLdqes4GuZAns">
+    <p> 在微门禁的开放平台上获得</p><br/>
     <div>AESKEY:</div>
-    <input class="input" id="aeskey" name="aeskey" value="nc9TnOWrbjVwO5COnyA9363Bkd59AcVa"><p> 加密选项(如不加密可为空),在微门禁的开放平台上获得</p><br/>
+    <input class="input" id="aeskey" name="aeskey" value="nc9TnOWrbjVwO5COnyA9363Bkd59AcVa">
+    <p> 加密选项(如不加密可为空),在微门禁的开放平台上获得</p><br/>
     <div>LOCK_SN:</div>
-    <input class="input" id="lock_sn" name="lock_sn" value="WMJ16882194"><p> 贴于购买模块上</p><br/>
+    <input class="input" id="lock_sn" name="lock_sn" value="WMJ16882194">
+    <p> 贴于购买模块上</p><br/>
 
     <input class="submit" style="width: 6rem;" type="submit" name="action" value="注册模块">
     &nbsp;&nbsp;<p>{$post_state|default=''}</p>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -59,6 +63,9 @@
     <input class="submit" style="width: 6rem;" type="submit" name="action" value="开门">
     &nbsp;&nbsp;<p>{$open_state|default=''}</p>&nbsp;&nbsp;&nbsp;&nbsp;
     <p>{$open_msg|default=''}</p><br/>
+    <input class="submit" style="width: 6rem;" type="submit" name="action" value="开门日志">
+    &nbsp;&nbsp;<p>{$log_state|default=''}</p>&nbsp;&nbsp;&nbsp;&nbsp;
+    <p>{$log_msg|default=''}</p><br/>
     <input class="submit" style="width: 6rem;" type="submit" name="action" value="注销模块">
     &nbsp;&nbsp;<p>{$delete_state|default=''}</p>&nbsp;&nbsp;&nbsp;&nbsp;
     <p>{$delete_msg|default=''}</p><br/>

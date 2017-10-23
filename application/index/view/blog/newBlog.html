@@ -1,14 +1,5 @@
-
+{include file="user/header" title="写博客" /}
 <style>
-    .tag {
-        width: 25rem;
-        height: 30px;
-        text-align: left;
-    }
-
-    input {
-        width: 137px;
-    }
 
     p {
         font-size: .9rem;
@@ -26,49 +17,39 @@
         margin-left: 1.5rem;
         font-size: 14px;
     }
-
-
 </style>
+<script>
+    function checkInput() {
+        //TODO
+        return false;
 
+    }
 
-<div style="text-align: center">
+</script>
 
-    <div style="display: inline-block">
-        <h2>用户注册</h2>
-        <form class="container" method="post" action="{:url('index/index/registerOk')}">
-            <div class="tag">
-                <div style="float: left;margin-right: 1rem;">邮箱：<input name="email" id="email" value=""></div>
-                <p id="check_email"></p>
+<body style="text-align: center">
+<div style="width: 950px;display: inline-block;">
+
+        <h2 style="text-align: center">写博客</h2>
+        <form  method="post" action="{:url('index/blog/postBlog')}">
+            <div style="text-align: left;margin-bottom: 10px">
+                标题：<input name="title" id="title" style="width: 60%">
+                时间：<input name="time" id="time" value="{php}echo date('Y-m-d H:i:s', time());{/php}" readonly>
             </div>
 
-            <div class="tag">
-                <div style="float: left;margin-right: 1rem;">密码：<input type="password" name="password" id="password"
-                                                                       value="">
-                </div>
-                <p id="check_password"></p>
+            <div>
+                <textarea name="content" id="content" style="height: 500px;width: 950px"></textarea>
             </div>
 
-            <div class="tag">
-                <div style="float: left;margin-right: 1rem;">昵称：<input name="nickname" id="nickname"></div>
-                <p id="check_nickname"></p>
-            </div>
-
-            <div class="tag">
-                <div style="float: left;margin-right: 1rem;">手机：<input name="mobile" id="mobile"></div>
-                <p id="check_mobile"></p>
-            </div>
-
-            <div class="tag" style="text-align: left;margin-top:15px">
-                <button onclick="return checkInput()">注册</button>
-                <a style="margin-left: 1rem" href="{:url('index')}">返回主页</a>
-            </div>
-
+            <input type="hidden" name="nickname" value="{$Think.session.nickname}">
+            <input type="submit" value="发  表" style="width: 5rem;font-size: 1.2rem;color:white;background:#4288ce;border-radius: 5px;" onsubmit="return checkInput()">
         </form>
 
-    </div>
+
 </div>
 
 
+</body>
 
 
 

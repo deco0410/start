@@ -10,6 +10,7 @@ class Index extends Controller
 {
     public function index()
     {
+
         return $this->fetch();
 
     }
@@ -31,16 +32,15 @@ class Index extends Controller
     public function checkNickname()
     {
         $data = input('post.');
-
         //修改页面的请求
-        if ($data['email']) {
+        if (array_key_exists('email', $data)) {
+      //if(isset($data['email'])){       //两种方法
             //获取原昵称
             $origin_nickname = UserModel::get(['email' => $data['email']]);
             $origin_nickname = $origin_nickname['nickname'];
             //查找新昵称
             $check_nickname = UserModel::get(['nickname' => $data['nickname']]);
             //用户修改昵称时判断新昵称是否存在（不包括原昵称）
-
             if ($origin_nickname != $data['nickname'] && !$check_nickname) {
                 return 'allow';
 
@@ -52,8 +52,8 @@ class Index extends Controller
             }
             //注册页面的请求
         } else {
-
             $check = UserModel::get(['nickname' => $data['nickname']]);
+
             if ($check) {
                 return 'deny';
             } else {

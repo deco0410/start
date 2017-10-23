@@ -16,9 +16,10 @@ function P($object)
 {
     echo "<pre>";
     print_r($object);
+
 }
 
-function checkReg()
+function checkRegister()
 {
     //id: 3-->admin, 2-->user, 1-->guest
     $id = $_REQUEST['id'];
@@ -35,7 +36,6 @@ function nvl($aStr)
     else
         return $aStr;
 }
-
 
 function email($qq)
 {

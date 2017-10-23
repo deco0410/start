@@ -60,6 +60,18 @@ class Gate extends Controller
 
         }
 
+         if ($action == '开门日志') {
+            $result = httpPost('https://www.wmj.com.cn/api/locklog.html?appid=' . $appid . '&appsecret=' . $appsecret, $lock_sn);
+            $result = trim($result, "\xEF\xBB\xBF"); //去除BOM头
+            $result = json_decode($result, true);
+            $state = $result['state'] == 1 ? '获取成功,' : '获取失败,';
+            $msg = $result['state_msg'];
+            $this->assign('log_state', $state);
+            $this->assign('log_msg', $msg);
+            return $this->fetch('gate/index');
+
+        }
+
         if ($action == '注销模块') {
             $result = httpPost('https://www.wmj.com.cn/api/dellock.html?appid=' . $appid . '&appsecret=' . $appsecret, $lock_sn);
             $result = trim($result, "\xEF\xBB\xBF"); //去除BOM头

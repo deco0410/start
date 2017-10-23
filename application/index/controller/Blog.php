@@ -17,6 +17,7 @@ class Blog extends Controller
         }else{
             return view('index/index');
         }
+
     }
 
     public function newBlog(){
@@ -25,6 +26,16 @@ class Blog extends Controller
         return view('blog/newBlog');
 
     }
+
+    public function postBlog(){
+        $data = input('post.');
+        $title = $data['title'];
+        $nickname = $data['nickname'];
+        p($_REQUEST);
+
+    }
+
+
 
 
 

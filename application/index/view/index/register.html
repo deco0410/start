@@ -86,8 +86,6 @@
 
         $("#nickname").blur(function () {
             var nickname = $(this).val();
-            var email = "{$Think.session.email}";
-            //TODO
 
             if (nickname.length == 0) {
                 $("#check_nickname").html('昵称不能为空!').css('color', 'red');
@@ -99,7 +97,7 @@
             $.ajax({
                 url: '{:url(\'index/index/checkNickname\')}',
                 type: 'POST',
-                data: {nickname: nickname, email: email},
+                data: {nickname: nickname},
                 dataType: 'json',
                 success: function (res) {
                     if (res == 'allow') {
@@ -212,7 +210,6 @@
                 <button onclick="return checkInput()">注册</button>
                 <a style="margin-left: 1rem" href="{:url('index')}">返回主页</a>
             </div>
-
 
         </form>
 
