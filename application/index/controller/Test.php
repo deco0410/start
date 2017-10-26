@@ -3,14 +3,15 @@
 namespace app\index\controller;
 
 use think\Controller;
-use math\Point, math\Rectangle, math\Circle;
+use math\Point, math\Rectangle, math\Circle, math\Line;
 
 
 class Test extends Controller
 {
     public function index()
     {
-
+       $length = Line::length(new Point(0, 0), new Point(1, 1));
+       echo $length;
     }
 
     public function calculatePI($time = 9999)
@@ -24,7 +25,6 @@ class Test extends Controller
                 $pointsInCircle++;
             }
             $pointsTotal++;
-
         }
         echo $pointsInCircle.'<br/>'.$pointsTotal.'<br/>';
         echo (4*$pointsInCircle/$pointsTotal);

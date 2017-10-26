@@ -2,7 +2,6 @@
 
 namespace app\index\controller;
 
-use math\Point;
 use app\index\Model\Profile;
 use app\index\model\User as UserModel;
 use think\Controller, think\Db, think\Session, think\Request;
