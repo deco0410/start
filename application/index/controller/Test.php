@@ -2,8 +2,9 @@
 
 namespace app\index\controller;
 
+use poker\Card;
+use poker\Hand;
 use think\Controller;
-use poker\Card, poker\Package;
 use math\Point, math\Rectangle, math\Circle, math\Line;
 
 
@@ -11,16 +12,20 @@ class Test extends Controller
 {
     public function index()
     {
-       $package = new Package();
-       $res = $package->deal();
-       p($res);
-
-
+        $hand = new Hand(new Card('A', 'spade'),
+            new Card('K', 'spade'),
+            new Card('2', 'diamond'),
+            new Card('T', 'spade'),
+            new Card('Q', 'spade'));
+        p($hand->power);
 
 
     }
 
-    public function getPI($time = 12345)
+    /**calculating Pi using Monte Carlo method
+     * @param int $time the number of points
+     */
+    protected function getPi($time = 12345)
     {
         $pointsTotal = $pointsInCircle = 0;
         for ($i = 0; $i < $time; $i++) {
@@ -32,8 +37,7 @@ class Test extends Controller
             }
             $pointsTotal++;
         }
-        echo (4*$pointsInCircle/$pointsTotal);
-
+        echo(4 * $pointsInCircle / $pointsTotal);
     }
 
 
