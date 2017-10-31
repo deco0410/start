@@ -2,12 +2,16 @@
 
 namespace poker;
 
+
 class Card
 {
     protected $rank, $suit;
 
     public function __construct($rank, $suit)
     {
+        if(!in_array(trim($rank), ['1','2','3','4','5','6','7','8','9','T', 'J','Q', 'K', 'A']) || !in_array(strtolower(trim($suit)), ['spade', 'heart', 'club','diamond'])){
+            exit('Wrong cards!');
+        }
         $this->rank = $rank;
         $this->suit = $suit;
     }

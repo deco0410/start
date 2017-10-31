@@ -19,18 +19,19 @@ class Hand
 
     /**对五张牌按照数字顺序进行排序
      * @param int $highA 1:A的rank为14, 0:A的rank为1
+     * @param string $sort desc(默认降序排列) ;asc
      * @return array
      */
-    public function sortCards($highA = 1, $sort = 1)
+    public function sortCards($highA = 1, $sort = 'desc')
     {
         $cards = $this->getCards();
         $sortedCards = [];
         foreach ($cards as $card) {
             $rank = $card->getRankNum($highA);
             $sortedCards[] = ['rank' => $rank, 'suit' => $card->getSuit()];
-            if($sort == 1){
+            if ($sort == 'desc') {
                 arsort($sortedCards);
-            }else{
+            } elseif ($sort == 'asc') {
                 asort($sortedCards);
             }
         }
@@ -43,23 +44,60 @@ class Hand
         return $this->cards;
     }
 
+    public static function compare(Hand $h1, Hand $h2)
+    {
+        $levels = ['high' => 1, 'pair' => 2, 'twoPairs' => 3, 'triple' => 4, 'straight' => 5, 'flush' => 6,
+            'fullHouse' => 7, 'quadruple' => 8, 'straightFlush' => 9, 'royalFlush' => 10];
+        $power1 = $h1->power;
+        $power2 = $h2->power;
+        $level1 = $levels[$power1['pattern']];
+        $level2 = $levels[$power2['pattern']];
+        if ($level1 > $level2) {
+            return 'bigger';
+        } elseif ($level1 < $level2) {
+            return 'smaller';
+        } else {
+            if(!is_array($power1['power'])){
+               if($power1['power'] > $power2['power']){
+                   return 'bigger';
+               }elseif($power1['power'] < $power2['power']){
+                   return 'smaller';
+               }else{
+                  return 'equal';
+               }
+            }else{
+                for ($i = 0; $i < count($power1['power']); $i++) {
+                if ($power1['power'][$i] < $power2['power'][$i]) {
+                    return 'smaller';
+
+                } elseif ($power1['power'][$i] > $power2['power'][$i]) {
+                    return 'bigger';
+
+                }
+            }
+            return 'equal';
+            }
+
+        }
+    }
+
 
     public function getPower()
     {
         if ($flush = $this->flush()) {
             if ($straight = $this->straight()) {
                 if ($straight == 14) {
-                    $power = ['level' => 'royalFlush'];
+                    $power = ['pattern' => 'royalFlush'];
                 } else {
-                    $power = ['level' => 'straightFlush', 'power' => $straight];
+                    $power = ['pattern' => 'straightFlush', 'power' => $straight];
                 }
             } else {
-                $power = ['level' => 'flush', 'power' => $flush];
+                $power = ['pattern' => 'flush', 'power' => $flush];
             }
             return $power;
         } else {
             if ($straight = $this->straight()) {
-                $power = ['level' => 'straight', 'power' => $straight];
+                $power = ['pattern' => 'straight', 'power' => $straight];
                 return $power;
             } else {
                 $cards = $this->sortCards();
@@ -69,24 +107,47 @@ class Hand
                 arsort($rank2count);
                 $values = array_values($rank2count);
                 if ($values[0] == 4) {
-                    $power['level'] = 'quadruple';
+                    $power = ['pattern' => 'quadruple', 'power' => array_keys($rank2count)];
+                    return $power;
                 } elseif ($values[0] == 3) {
                     if ($values[1] == 2) {
-                        $power['level'] = 'fullHouse';
+                        $power = ['pattern' => 'fullHouse', 'power' => array_keys($rank2count)];
                     } else {
-                        $power['level'] = 'triple';
+                        //三条的rank
+                        $keys = array_keys($rank2count);
+                        $key = array_slice($keys, 0, 1);
+                        $kicker = array_slice($keys, 1);
+                        rsort($kicker);
+                        //将踢脚降序排列
+                        $sorted = array_merge($key, $kicker);
+                        $power = ['pattern' => 'triple', 'power' => $sorted];
                     }
+                    return $power;
                 } elseif ($values[0] == 2) {
                     if ($values[1] == 2) {
-                        $power['level'] = 'twoPairs';
+                        $keys = array_keys($rank2count);
+                        $key = array_slice($keys, 0, 2);
+                        rsort($key);
+                        $kicker = array_slice($keys, 2);
+                        $sorted = array_merge($key, $kicker);
+                        $power = ['pattern' => 'twoPairs', 'power' => $sorted];
                     } else {
-                        $power['level'] = 'pair';
+                        $keys = array_keys($rank2count);
+                        $key = array_slice($keys, 0, 1);
+                        $kicker = array_slice($keys, 1);
+                        rsort($kicker);
+                        //将踢脚降序排列
+                        $sorted = array_merge($key, $kicker);
+                        $power = ['pattern' => 'pair', 'power' => $sorted];
                     }
+                    return $power;
                 } else {
-                    $power['level'] = 'high';
+                    $keys = array_keys($rank2count);
+                    rsort($keys);
+                    $power = ['pattern' => 'high', 'power' => $keys];
+                    return $power;
                 }
-                $power['power'] = array_keys($rank2count);
-                return $power;
+
             }
         }
     }
