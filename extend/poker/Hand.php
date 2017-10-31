@@ -56,6 +56,7 @@ class Hand
             return 'bigger';
         } elseif ($level1 < $level2) {
             return 'smaller';
+            //牌型相同比较踢脚
         } else {
             if(!is_array($power1['power'])){
                if($power1['power'] > $power2['power']){
@@ -69,20 +70,17 @@ class Hand
                 for ($i = 0; $i < count($power1['power']); $i++) {
                 if ($power1['power'][$i] < $power2['power'][$i]) {
                     return 'smaller';
-
                 } elseif ($power1['power'][$i] > $power2['power'][$i]) {
                     return 'bigger';
-
                 }
             }
             return 'equal';
             }
-
         }
     }
 
 
-    public function getPower()
+    private function getPower()
     {
         if ($flush = $this->flush()) {
             if ($straight = $this->straight()) {
@@ -147,14 +145,11 @@ class Hand
                     $power = ['pattern' => 'high', 'power' => $keys];
                     return $power;
                 }
-
             }
         }
     }
 
-    /**判断牌型是否为顺子
-     * @return mixed 如果是顺子则返回high card,否则返回false
-     */
+
     private function straight()
     {
         for ($i = 0; $i < 2; $i++) {
