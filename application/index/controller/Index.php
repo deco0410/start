@@ -10,7 +10,6 @@ class Index extends Controller
 {
     public function index()
     {
-
         return $this->fetch();
 
     }
@@ -26,7 +25,6 @@ class Index extends Controller
         } else {
             return 'allow';
         }
-
     }
 
     public function checkNickname()
