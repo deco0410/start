@@ -12,19 +12,21 @@ class Test extends Controller
 {
     public function index()
     {
-        $a = new Hand(new Card('K', 'spade'),
-            new Card('A', 'spade'),
-            new Card('Q', 'spade'),
-            new Card('4', 'spade'),
-            new Card('5', 'spade'));
-        $b = new Hand(new Card('T', 'spade'),
-            new Card('9', 'spade'),
-            new Card('8', 'diamond'),
-            new Card('6', 'spade'),
-            new Card('7', 'spade'));
-        p($a->power);
-        p($b->power);
-        echo Hand::compare($a, $b);
+        $A = new Hand(new Card('K', 'spade'),
+            new Card('K', 'spade'),
+            new Card('5', 'heart'),
+            new Card('T', 'spade'),
+            new Card('T', 'spade'));
+        $B = new Hand(new Card('K', 'spade'),
+            new Card('K', 'spade'),
+            new Card('K', 'diamond'),
+            new Card('T', 'spade'),
+            new Card('T', 'spade'));
+        $powerA = $A->getPower()['pattern'];
+        $powerB = $B->getPower()['pattern'];
+        echo "A ($powerA) is " . Hand::compare($A, $B) . " than B ($powerB)";
+
+
     }
 
     /**calculating Pi using Monte Carlo method
