@@ -83,7 +83,7 @@ class Hand
     /**获得5张牌的牌力
      * @return array pattern为牌型， power为踢脚
      */
-    private function getPower()
+    public function getPower()
     {
         if ($flush = $this->flush()) {
             if ($straight = $this->straight()) {
