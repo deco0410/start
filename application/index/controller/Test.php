@@ -17,13 +17,14 @@ class Test extends Controller
             new Card('5', 'heart'),
             new Card('T', 'spade'),
             new Card('T', 'spade'));
-        $B= new Hand(new Card('K', 'spade'),
+        $B = new Hand(new Card('K', 'spade'),
             new Card('K', 'spade'),
-            new Card('3', 'diamond'),
+            new Card('K', 'diamond'),
             new Card('T', 'spade'),
             new Card('T', 'spade'));
-        echo Hand::compare($A, $B);
-
+        $powerA = $A->getPower()['pattern'];
+        $powerB = $B->getPower()['pattern'];
+        echo "A ($powerA) is " . Hand::compare($A, $B) . " than B ($powerB)";
 
 
     }
