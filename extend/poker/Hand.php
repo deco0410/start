@@ -44,6 +44,11 @@ class Hand
         return $this->cards;
     }
 
+    /**比较两手牌的牌力大小
+     * @param Hand $h1
+     * @param Hand $h2
+     * @return int 1: bigger; 0: equal; -1: smaller
+     */
     public static function compare(Hand $h1, Hand $h2)
     {
         $levels = ['high' => 1, 'pair' => 2, 'twoPairs' => 3, 'triple' => 4, 'straight' => 5, 'flush' => 6,
@@ -53,28 +58,32 @@ class Hand
         $level1 = $levels[$power1['pattern']];
         $level2 = $levels[$power2['pattern']];
         if ($level1 > $level2) {
-            return 'bigger';
+            return 1;
         } elseif ($level1 < $level2) {
-            return 'smaller';
+            return -1;
             //牌型相同比较踢脚
         } else {
-            if(!is_array($power1['power'])){
-               if($power1['power'] > $power2['power']){
-                   return 'bigger';
-               }elseif($power1['power'] < $power2['power']){
-                   return 'smaller';
-               }else{
-                  return 'equal';
-               }
-            }else{
-                for ($i = 0; $i < count($power1['power']); $i++) {
-                if ($power1['power'][$i] < $power2['power'][$i]) {
-                    return 'smaller';
-                } elseif ($power1['power'][$i] > $power2['power'][$i]) {
-                    return 'bigger';
+            //royalFlush
+            if (!isset($power1['power'])) {
+                return 0;
+                //straight or straightFlush
+            } elseif (!is_array($power1['power'])) {
+                if ($power1['power'] > $power2['power']) {
+                    return 1;
+                } elseif ($power1['power'] < $power2['power']) {
+                    return -1;
+                } else {
+                    return 0;
                 }
-            }
-            return 'equal';
+            } else {
+                for ($i = 0; $i < count($power1['power']); $i++) {
+                    if ($power1['power'][$i] < $power2['power'][$i]) {
+                        return -1;
+                    } elseif ($power1['power'][$i] > $power2['power'][$i]) {
+                        return 1;
+                    }
+                }
+                return 0;
             }
         }
     }
@@ -153,6 +162,9 @@ class Hand
     }
 
 
+    /**判断是否为顺子
+     * @return bool 是则返回顺子的最大牌
+     */
     private function straight()
     {
         for ($i = 0; $i < 2; $i++) {
@@ -170,6 +182,9 @@ class Hand
         return false;
     }
 
+    /**判断是否为同花
+     * @return bool 是则返回所有rank降序排列的数组
+     */
     private function flush()
     {
         $cards = $this->sortCards();
