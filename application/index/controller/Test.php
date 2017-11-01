@@ -12,12 +12,18 @@ class Test extends Controller
 {
     public function index()
     {
-        $hand = new Hand(new Card('A', 'spade'),
+        $A = new Hand(new Card('K', 'spade'),
             new Card('K', 'spade'),
-            new Card('2', 'diamond'),
+            new Card('5', 'heart'),
             new Card('T', 'spade'),
-            new Card('Q', 'spade'));
-        p($hand->power);
+            new Card('T', 'spade'));
+        $B= new Hand(new Card('K', 'spade'),
+            new Card('K', 'spade'),
+            new Card('3', 'diamond'),
+            new Card('T', 'spade'),
+            new Card('T', 'spade'));
+        echo Hand::compare($A, $B);
+
 
 
     }
