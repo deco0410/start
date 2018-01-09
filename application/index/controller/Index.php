@@ -11,7 +11,6 @@ class Index extends Controller
     public function index()
     {
         return $this->fetch();
-
     }
 
 
@@ -194,6 +193,11 @@ class Index extends Controller
 
         }
 
+    }
+
+    public function scroll()
+    {
+        return view();
     }
 
 
